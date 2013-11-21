@@ -1,5 +1,6 @@
 var cCollection;
 var stickCollection;
+var minWidth = 8048;
 
 function sortStop(event, ui)
 {
@@ -57,13 +58,12 @@ $(function(){
             stickCollection.fetch({
                 success: function(collection, response, options) {
 
-                    $("#sortable").sortable({
-                        stop: sortStop,
-                        start: sortStart/*,
-                        disabled: true*/
-                    });
+//                    $("#sortable").sortable({
+//                        stop: sortStop,
+//                        start: sortStart
+//                    });
 
-                    $("#sortable").disableSelection();
+                    //$("#sortable").disableSelection();
 
                     $('.st_button').qtip({
                         position: {
@@ -99,6 +99,15 @@ $(function(){
                             classes: 'qtip-light'
                         }
                     });
+                    //console.log(maxWidth);
+                    var $container = $('#sortable');
+
+                      $container.isotope({
+                        itemSelector: '.stickli',
+                        masonry: {
+                            columnWidth: 150
+                          }
+                      });
                 }
             });
         }

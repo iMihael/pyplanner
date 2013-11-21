@@ -4,7 +4,7 @@
 var StickerView = Backbone.View.extend({
 
     className: 'stickli',
-    tagName: 'li',
+    tagName: 'div',
     template: '#stickerTemplate',
     container: '#sortable',
     color: 'ffffff',
@@ -59,6 +59,8 @@ var StickerView = Backbone.View.extend({
         stick.set({height: h});
 
         stick.save();
+
+        $("#sortable").isotope( 'reLayout' );
     },
     render: function() {
 
