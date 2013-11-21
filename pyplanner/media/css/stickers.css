@@ -1,0 +1,156 @@
+.colors
+{
+    top:70px;
+    right:10px;
+    position: fixed;
+}
+.header a
+{
+    color:#fff;
+}
+.s_green
+{
+    background: #78ba00;
+}
+.s_red
+{
+    background: #c1004f;
+}
+.s_brown
+{
+    background: #632f00;
+}
+.s_pink
+{
+    background: #e165bb;
+}
+.s_violet
+{
+    background: #7200ad;
+}
+.s_dark_violet
+{
+    background: #4617b5;
+}
+.s_yellow
+{
+    background: #f4b300;
+}
+.s_blue
+{
+   background:#006ac0;
+}
+.s_blue .header a
+{
+    color:#fff;
+}
+.s_dark_blue
+{
+    background:#00214f;
+}
+.s_dark_green
+{
+    background: #004900;
+}
+.s_dark_orange
+{
+    background: #e66b1b;
+}
+.s_orange
+{
+    background: #ff991d;
+}
+.header
+{
+    height:20px;
+    padding:2px 5px;
+    float: right;
+
+    opacity: .1;
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
+    -o-transition: opacity .5s ease-out;
+}
+.header:hover
+{
+    opacity: 0.8;
+}
+.header a:hover
+{
+    text-decoration: none;
+}
+.stickli
+{
+    width:200px;
+    height:200px;
+    /*float:left;*/
+    margin-right:5px;
+    /*margin-bottom:5px;*/
+
+    padding:0;
+    display: inline-block;
+    overflow: hidden;
+}
+.stickli .sbody
+{
+    float:left;
+    text-align: left;
+    padding:5px;
+}
+.stickli .sArea
+{
+    background-color:inherit;
+    resize: none;
+    width:inherit;
+    height: -moz-calc(100% - 30px);
+    /* WebKit */
+    height: -webkit-calc(100% - 30px);
+    /* Opera */
+    height: -o-calc(100% - 30px);
+    /* Standard */
+    height: calc(100% - 30px);
+    /*height:inherit;*/
+    /*border:0;*/
+    display:none;
+    float:left;
+    margin-top:3px;
+}
+.horizontal
+{
+    float:left;
+    margin-left:2px!important;
+    margin-bottom:2px!important;
+}
+.tipColors
+{
+    display:none;
+}
+.add-st-btn:hover
+{
+    opacity: 1;
+}
+.add-st-btn
+{
+    opacity: 0.6;
+
+    margin-left:10px;
+    /*float:right;*/
+
+    margin-bottom:10px;
+}
+.add-st-btn a
+{
+    width:20px;
+    height:20px;
+    display: block;
+}
+
+#sortable
+{
+    float:left;
+    list-style: none;
+    margin:0;
+    padding:0;
+    text-align: center;
+}

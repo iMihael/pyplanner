@@ -1,0 +1,64 @@
+.navbar-brand {
+    background-image: url('/media/images/logo_small.png');
+    background-repeat: no-repeat;
+    padding-left: 50px!important;
+    background-size: 50px;
+    background-position: 0px 8px;
+}
+
+.nav-prevent
+{
+    height:51px;
+}
+.carousel-inner .item
+{
+    background: #777777;
+    height:400px;
+}
+.carousel-inner .item img
+{
+    margin: 0 auto;
+
+}
+.carousel, .jumbotron
+{
+    margin-top:10px;
+}
+.slide-icon
+{
+    color:#ffffff;
+    font-size: 200px;
+    margin:0 auto;
+    padding-top:40px;
+    display:block;
+    width:200px;
+    height:200px;
+}
+.auth-link
+{
+    margin-left:4px;
+    padding-left:30px!important;
+    background-repeat: no-repeat;
+    padding-top:0px!important;
+    margin-bottom: 4px;
+}
+.google-link
+{
+    background-image: url('/media/images/google.png');
+}
+.facebook-link
+{
+    background-image: url('/media/images/facebook.png');
+}
+.twitter-link
+{
+    background-image: url('/media/images/twitter.png');
+}
+.github-link
+{
+    background-image: url('/media/images/github.png');
+}
+.vk-link
+{
+    background-image: url('/media/images/vk.png');
+}

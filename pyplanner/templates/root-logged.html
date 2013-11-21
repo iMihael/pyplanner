@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include 'head.html' %}
+
+		<title>{% block title %}{% endblock %} - workPlanner</title>
+
+		{% block head %}{% endblock %}
+	</head>
+
+	<body>
+        <header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
+                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="{% url 'pyplanner.views.index_page' %}">workPlanner</a>
+                  </div>
+
+                <nav class="collapse navbar-collapse bs-navbar-collapse navbar-ex1-collapse" role="navigation">
+                    <ul class="nav navbar-nav">
+						<li class="{% block nav-dashboard %}{% endblock %}">
+							<a href="{% url 'dashboard.views.index' %}">Dashboard</a>
+						</li>
+						<li class="{% block nav-planner %}{% endblock %}">
+							<a href="#">Planner</a>
+						</li>
+						<li class="{% block nav-todo %}{% endblock %}">
+							<a href="#">Todo</a>
+						</li>
+					</ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+						{% if user_logged %}
+							<li class="dropdown {% block nav-profile %}{% endblock %}">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }} <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Manage profile</a>
+									</li>
+                                    <li>
+                                        <a href="{% url 'pyplanner.views.logout_view' %}">Logout</a>
+                                    </li>
+								</ul>
+							</li>
+						{% else %}
+							<li class="dropdown {% block nav-login %}{% endblock %}">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+								  <li><a class="auth-link google-link" href="{% url 'socialauth_begin' 'google-oauth2' %}">Google</a></li>
+								  <li><a class="auth-link facebook-link" href="{% url 'socialauth_begin' 'facebook' %}">Facebook</a></li>
+								  <li><a class="auth-link twitter-link" href="{% url 'socialauth_begin' 'twitter' %}">Twitter</a></li>
+								  <li><a class="auth-link github-link" href="{% url 'socialauth_begin' 'github' %}">Github</a></li>
+								  <li><a class="auth-link vk-link" href="{% url 'socialauth_begin' 'vk-oauth' %}">Vkontakte</a></li>
+								  <li class="divider"></li>
+								  <li><a href="{% url 'pyplanner.views.login_form' %}">Login / Passwod</a></li>
+								</ul>
+							</li>
+						{% endif %}
+						<li class="dropdown" style="border-left:1px solid #ccc;">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-home"></span>
+{#								<b class="caret"></b>#}
+							</a>
+							<ul class="dropdown-menu">
+								<li class="{% block nav-home %}{% endblock %}">
+								  <a href="{% url 'pyplanner.views.index_page' %}">Home</a>
+								</li>
+								<li class="{% block nav-about %}{% endblock %}">
+								  <a href="{% url 'pyplanner.views.about' %}">About</a>
+								</li>
+								<li class="{% block nav-blog %}{% endblock %}">
+								  <a href="#">Blog</a>
+								</li>
+								<li class="{% block nav-contacts %}{% endblock %}">
+								  <a href="{% url 'pyplanner.views.contacts' %}">Contacts</a>
+								</li>
+							</ul>
+						</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </header>
+
+
+        <div class="nav-prevent"></div>
+
+
+        <div class="container">
+
+		{% block body %}{% endblock %}
+
+
+
+        </div>
+	</body>
+
+</html>

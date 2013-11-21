@@ -1,0 +1,64 @@
+{% extends "root-logged.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block nav-dashboard %}active{% endblock %}
+
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="/media/css/stickers.css" />
+
+    <script type="text/javascript" src="/media/js/views/ColorView.js"></script>
+    <script type="text/javascript" src="/media/js/models/ColorModel.js"></script>
+    <script type="text/javascript" src="/media/js/views/StickerView.js"></script>
+    <script type="text/javascript" src="/media/js/models/StickerModel.js"></script>
+	<script type="text/javascript" src="/media/js/controllers/DashboardController.js"></script>
+{% endblock %}
+
+{% block body %}
+
+    <script id="colorTemplate" type="text/template">
+        <a href="#" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
+    </script>
+
+    <script id="stickerTemplate" type="text/template">
+        <div class="header">
+            <a href="#" class="st_button" title="Change color">
+                <span class="glyphicon glyphicon-tint ccolor"></span>
+            </a>
+{#            <a href="#" class="st_button" title="Notification">#}
+{#                <span class="glyphicon glyphicon-bell"></span>#}
+{#            </a>#}
+
+            <a href="#" data-target="archive" class="st_button btn_archive" title="Archive">
+                <span class="glyphicon glyphicon-inbox"></span>
+            </a>
+
+            <a href="#" data-target="delete" class="st_button btn_trash" title="Delete">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="sbody">
+            <%= body %>
+        </div>
+        <textarea stick="<%= sticker_id %>" class="sArea"><%= body %></textarea>
+
+    </script>
+
+    <div class="tipColors">
+
+    </div>
+
+	<div style="" class="colors">
+
+	</div>
+	<h2>Dashboard</h2>
+
+	<div style="padding-top:10px;">
+		<ul id="sortable">
+
+
+		</ul>
+	</div>
+
+
+
+{% endblock %}
