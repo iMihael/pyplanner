@@ -42,11 +42,6 @@ var StickerModel = Backbone.Model.extend({
                 model: this
             });
 
-            if(parseInt(this.get('width')) < minWidth)
-            {
-                minWidth = parseInt(this.get('width'));
-            }
-
             this.view.render();
         }
     }

@@ -86,11 +86,12 @@
     height:200px;
     /*float:left;*/
     margin-right:5px;
-    /*margin-bottom:5px;*/
+    margin-bottom:5px;
 
     padding:0;
     display: inline-block;
     overflow: hidden;
+    border-radius: 3px;
 }
 .stickli .sbody
 {

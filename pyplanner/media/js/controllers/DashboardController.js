@@ -1,6 +1,5 @@
 var cCollection;
 var stickCollection;
-var minWidth = 8048;
 
 function sortStop(event, ui)
 {
@@ -99,15 +98,19 @@ $(function(){
                             classes: 'qtip-light'
                         }
                     });
-                    //console.log(maxWidth);
-                    var $container = $('#sortable');
 
-                      $container.isotope({
+                    //console.log(maxWidth);
+
+
+                    $('#sortable').isotope({
                         itemSelector: '.stickli',
-                        masonry: {
+                        /*masonry: {
                             columnWidth: 150
-                          }
-                      });
+                        }*/
+                        masonryHorizontal: {
+                            rowHeight: 150
+                        }
+                    });
                 }
             });
         }
