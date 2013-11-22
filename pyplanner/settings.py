@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'aq=l8!lc$fe$q0@decf4r5rq6yqvo=(gcmf)e7cj$szc%so_z$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -134,12 +134,19 @@ WSGI_APPLICATION = 'pyplanner.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pyplanner',
-        'USER': 'root',
-        'PASSWORD': 'didiom17',
-        'HOST': '127.0.0.1',
+    "default": {
+        # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
+        "ENGINE": "django.db.backends.",
+        # DB name or path to database file if using sqlite3.
+        "NAME": "",
+        # Not used with sqlite3.
+        "USER": "",
+        # Not used with sqlite3.
+        "PASSWORD": "",
+        # Set to empty string for localhost. Not used with sqlite3.
+        "HOST": "",
+        # Set to empty string for default. Not used with sqlite3.
+        "PORT": "",
     }
 }
 
@@ -184,3 +191,15 @@ LOGGING = {
         },
     },
 }
+
+##################
+# LOCAL SETTINGS #
+##################
+
+# Allow any settings to be defined in local_settings.py which should be
+# ignored in your version control system allowing for settings to be
+# defined per machine.
+try:
+    from local_settings import *
+except ImportError:
+    pass
