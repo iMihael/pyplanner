@@ -91,13 +91,17 @@ var StickerView = Backbone.View.extend({
         $(this.el).resizable({
             autoHide: true,
             stop: this.stopResize,
-            resize: this.resizeProcess
+            resize: this.resizeProcess,
+            handles: "s"
         });
 
         return this;
     },
     resizeProcess: function(e, ui)
     {
+
+//        ui.size.width = ui.originalSize.width;
+
 //        var oW = parseInt(ui.originalSize.width);
 //        var oH = parseInt(ui.originalSize.height);
 //        var w = parseInt(ui.size.width);

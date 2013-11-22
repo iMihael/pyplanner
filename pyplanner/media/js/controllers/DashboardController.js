@@ -64,40 +64,40 @@ $(function(){
 
                     //$("#sortable").disableSelection();
 
-                    $('.st_button').qtip({
-                        position: {
-                            my: 'bottom center',
-                            at: 'top center'
-                        },
-                        style: {
-                            classes: 'qtip-light'
-                        },
-                        show: {
-                            solo: true
-                        }
-                    });
+//                    $('.st_button').qtip({
+//                        position: {
+//                            my: 'bottom center',
+//                            at: 'top center'
+//                        },
+//                        style: {
+//                            classes: 'qtip-light'
+//                        },
+//                        show: {
+//                            solo: true
+//                        }
+//                    });
 
-                    $('.ccolor').qtip({
-                        position: {
-                            my: 'center center',
-                            at: 'top center'
-                        },
-                        show: {
-                            event: 'click',
-                            solo: true
-                        },
-                        hide: 'unfocus',
-                        content: {
-                            text: function(event, api){
-                                return $(".tipColors").html();
-                            },
-                            title: "Choose sticker color",
-                            button: true
-                        },
-                        style: {
-                            classes: 'qtip-light'
-                        }
-                    });
+//                    $('.ccolor').qtip({
+//                        position: {
+//                            my: 'center center',
+//                            at: 'top center'
+//                        },
+//                        show: {
+//                            event: 'click',
+//                            solo: true
+//                        },
+//                        hide: 'unfocus',
+//                        content: {
+//                            text: function(event, api){
+//                                return $(".tipColors").html();
+//                            },
+//                            title: "Choose sticker color",
+//                            button: true
+//                        },
+//                        style: {
+//                            classes: 'qtip-light'
+//                        }
+//                    });
 
                     //console.log(maxWidth);
 
