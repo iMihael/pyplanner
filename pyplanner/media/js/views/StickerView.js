@@ -23,11 +23,20 @@ var StickerView = Backbone.View.extend({
         'click .btn_trash': 'hideSticker',
         'click .btn_archive': 'hideSticker',
         'dblclick': 'showEditArea',
-        'click .ccolor': 'noAnchor'
+        'click .ccolor': 'noAnchor',
+        'click .header': 'resize',
+        'click .lt-bar': 'resize',
+        'click .left-bar': 'resize',
+        'click .right-bar': 'resize',
+        'click .bottom-bar': 'resize',
+        'click .rb-bar': 'resize'
         /*'mouseover .header': 'enableSort',
         'mouseout .header': 'disableSort'*/
     },
-
+    resize: function(e)
+    {
+        console.log(e);
+    },
     noAnchor: function(){
         return false;
     },

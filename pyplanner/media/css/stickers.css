@@ -97,6 +97,14 @@
     height:15px;
     background: brown;
     cursor: s-resize;
+    float:left;
+    width: -moz-calc(100% - 15px);
+    /* WebKit */
+    width: -webkit-calc(100% - 15px);
+    /* Opera */
+    width: -o-calc(100% - 15px);
+    /* Standard */
+    width: calc(100% - 15px);
 }
 .lt-bar
 {
