@@ -31,14 +31,6 @@ var StickerView = Backbone.View.extend({
     noAnchor: function(){
         return false;
     },
-//    enableSort: function(e)
-//    {
-//        $("#sortable").sortable('enable');
-//    },
-//    disableSort: function(e)
-//    {
-//        $("#sortable").sortable('disable');
-//    },
     showEditArea: function(e)
     {
         $(e.currentTarget).find(".sbody").hide();
@@ -88,44 +80,7 @@ var StickerView = Backbone.View.extend({
         else
             $(this.container).append(this.el);
 
-        $(this.el).resizable({
-            autoHide: true,
-            stop: this.stopResize,
-            resize: this.resizeProcess,
-            handles: "s"
-        });
-
         return this;
-    },
-    resizeProcess: function(e, ui)
-    {
-
-//        ui.size.width = ui.originalSize.width;
-
-//        var oW = parseInt(ui.originalSize.width);
-//        var oH = parseInt(ui.originalSize.height);
-//        var w = parseInt(ui.size.width);
-//        var h = parseInt(ui.size.height);
-//
-//        var wN = oW / this.minWidth;
-//        var hN = oH / this.minHeight;
-//
-//        if(oW < w)
-//            wN++;
-//        else if(oW > w && wN > 1)
-//            wN--;
-//
-//
-//        if(oH < h)
-//            hN++;
-//        else if(oH > h && hN > 1)
-//            hN--;
-//
-//        var width = wN * this.minWidth;
-//        var height = hN * this.minHeight;
-//
-//        ui.element.css("width", width + 'px');
-//        ui.element.css("height", height + 'px');
     },
     hideSticker: function(e){
 

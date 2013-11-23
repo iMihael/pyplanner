@@ -60,17 +60,79 @@
 {
     background: #ff991d;
 }
+.left-bar
+{
+    float: left;
+    height: inherit;
+    width: 15px;
+    background: #000;
+    cursor: w-resize;
+
+    height: -moz-calc(100% - 30px);
+    /* WebKit */
+    height: -webkit-calc(100% - 30px);
+    /* Opera */
+    height: -o-calc(100% - 30px);
+    /* Standard */
+    height: calc(100% - 30px);
+}
+.right-bar
+{
+    float:right;
+    height: inherit;
+    width:15px;
+    background:#000;
+    cursor: e-resize;
+
+    height: -moz-calc(100% - 30px);
+    /* WebKit */
+    height: -webkit-calc(100% - 30px);
+    /* Opera */
+    height: -o-calc(100% - 30px);
+    /* Standard */
+    height: calc(100% - 30px);
+}
+.bottom-bar
+{
+    height:15px;
+    background: brown;
+    cursor: s-resize;
+}
+.lt-bar
+{
+    float:left;
+    width: 15px;
+    background:red;
+    height:15px;
+    border: inherit;
+    border-top-left-radius: 2px;
+    cursor: nw-resize;
+}
+.rb-bar
+{
+    background:red;
+    width:15px;
+    height:15px;
+    float:right;
+    cursor: se-resize;
+
+}
 .header
 {
-    height:20px;
+    height:15px;
     padding:2px 5px;
-    float: right;
+    /*float: right;*/
+    text-align: right;
 
     opacity: .1;
     transition: opacity .5s ease-out;
     -moz-transition: opacity .5s ease-out;
     -webkit-transition: opacity .5s ease-out;
     -o-transition: opacity .5s ease-out;
+
+    cursor: n-resize;
+    margin-left: 15px;
+    background: #ffff00;
 }
 .header:hover
 {
@@ -95,9 +157,17 @@
 }
 .stickli .sbody
 {
-    float:left;
+    /*float:left;*/
     text-align: left;
     padding:5px;
+    background: #ffffff;
+    height: -moz-calc(100% - 30px);
+    /* WebKit */
+    height: -webkit-calc(100% - 30px);
+    /* Opera */
+    height: -o-calc(100% - 30px);
+    /* Standard */
+    height: calc(100% - 30px);
 }
 .stickli .sArea
 {
@@ -142,8 +212,8 @@
 }
 .add-st-btn a
 {
-    width:20px;
-    height:20px;
+    width:15px;
+    height:15px;
     display: block;
 }
 
