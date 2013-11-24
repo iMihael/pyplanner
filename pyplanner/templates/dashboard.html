@@ -23,10 +23,13 @@
     <script id="stickerTemplate" type="text/template">
         <div class="lt-bar"></div>
         <div class="header">
-
+            <a href="#" class="st_button" title="Edit">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
             <a href="#" class="st_button" title="Change color">
                 <span class="glyphicon glyphicon-tint ccolor"></span>
             </a>
+
 {#            <a href="#" class="st_button" title="Notification">#}
 {#                <span class="glyphicon glyphicon-bell"></span>#}
 {#            </a>#}
@@ -40,13 +43,15 @@
             </a>
         </div>
         <div class="left-bar"></div>
+        <div class="sbody">
+            <%= body %>
+        </div>
+
         <div class="right-bar">
 
         </div>
 
-        <div class="sbody">
-            <%= body %>
-        </div>
+
         <textarea stick="<%= sticker_id %>" class="sArea"><%= body %></textarea>
         <div class="clearfix"></div>
         <div class="bottom-bar">

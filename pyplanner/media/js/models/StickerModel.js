@@ -7,8 +7,8 @@ var StickerModel = Backbone.Model.extend({
         sticker_id: 0,
         body: '',
         color_id: 0,
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         position: 0
     },
     color: 'ffffff',
@@ -23,6 +23,7 @@ var StickerModel = Backbone.Model.extend({
             });
 
             model.view.render();
+            $("#sortable").isotope('reLayout');
         }
     },
     initialize: function(attributes, options){

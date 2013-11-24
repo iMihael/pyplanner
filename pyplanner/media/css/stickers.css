@@ -65,7 +65,7 @@
     float: left;
     height: inherit;
     width: 15px;
-    background: #000;
+    /*background: #000;*/
     cursor: w-resize;
 
     height: -moz-calc(100% - 30px);
@@ -81,7 +81,7 @@
     float:right;
     height: inherit;
     width:15px;
-    background:#000;
+    /*background:#000;*/
     cursor: e-resize;
 
     height: -moz-calc(100% - 30px);
@@ -95,7 +95,7 @@
 .bottom-bar
 {
     height:15px;
-    background: brown;
+    /*background: brown;*/
     cursor: s-resize;
     float:left;
     width: -moz-calc(100% - 15px);
@@ -110,7 +110,7 @@
 {
     float:left;
     width: 15px;
-    background:red;
+    /*background:red;*/
     height:15px;
     border: inherit;
     border-top-left-radius: 2px;
@@ -118,7 +118,7 @@
 }
 .rb-bar
 {
-    background:red;
+    /*background:red;*/
     width:15px;
     height:15px;
     float:right;
@@ -140,7 +140,7 @@
 
     cursor: n-resize;
     margin-left: 15px;
-    background: #ffff00;
+    /*background: #ffff00;*/
 }
 .header:hover
 {
@@ -165,10 +165,12 @@
 }
 .stickli .sbody
 {
-    /*float:left;*/
+    /*margin-left:15px;*/
+    /*margin-right:15px;*/
+    float:left;
     text-align: left;
-    padding:5px;
-    background: #ffffff;
+    /*padding:5px;*/
+    /*background: #ffffff;*/
     height: -moz-calc(100% - 30px);
     /* WebKit */
     height: -webkit-calc(100% - 30px);
@@ -176,10 +178,22 @@
     height: -o-calc(100% - 30px);
     /* Standard */
     height: calc(100% - 30px);
+
+    width: -moz-calc(100% - 30px);
+    /* WebKit */
+    width: -webkit-calc(100% - 30px);
+    /* Opera */
+    width: -o-calc(100% - 30px);
+    /* Standard */
+    width: calc(100% - 30px);
+    overflow: hidden;
+
+
 }
 .stickli .sArea
 {
     background-color:inherit;
+    /*background: red;*/
     resize: none;
     width:inherit;
     height: -moz-calc(100% - 30px);
@@ -189,6 +203,15 @@
     height: -o-calc(100% - 30px);
     /* Standard */
     height: calc(100% - 30px);
+
+
+    width: -moz-calc(100% - 30px);
+    /* WebKit */
+    width: -webkit-calc(100% - 30px);
+    /* Opera */
+    width: -o-calc(100% - 30px);
+    /* Standard */
+    width: calc(100% - 30px);
     /*height:inherit;*/
     /*border:0;*/
     display:none;
@@ -233,3 +256,42 @@
     padding:0;
     text-align: center;
 }
+
+
+/*.isotope,*/
+/*.isotope .isotope-item {*/
+  /* change duration value to whatever you like */
+  /*-webkit-transition-duration: 0.8s;*/
+     /*-moz-transition-duration: 0.8s;*/
+      /*-ms-transition-duration: 0.8s;*/
+       /*-o-transition-duration: 0.8s;*/
+          /*transition-duration: 0.8s;*/
+/*}*/
+
+/*.isotope {*/
+  /*-webkit-transition-property: height, width;*/
+     /*-moz-transition-property: height, width;*/
+      /*-ms-transition-property: height, width;*/
+       /*-o-transition-property: height, width;*/
+          /*transition-property: height, width;*/
+/*}*/
+
+/*.isotope .isotope-item {*/
+  /*-webkit-transition-property: -webkit-transform, opacity;*/
+     /*-moz-transition-property:    -moz-transform, opacity;*/
+      /*-ms-transition-property:     -ms-transform, opacity;*/
+       /*-o-transition-property:      -o-transform, opacity;*/
+          /*transition-property:         transform, opacity;*/
+/*}*/
+
+/**** disabling Isotope CSS3 transitions ****/
+
+/*.isotope.no-transition,*/
+/*.isotope.no-transition .isotope-item,*/
+/*.isotope .isotope-item.no-transition {*/
+  /*-webkit-transition-duration: 0s;*/
+     /*-moz-transition-duration: 0s;*/
+      /*-ms-transition-duration: 0s;*/
+       /*-o-transition-duration: 0s;*/
+          /*transition-duration: 0s;*/
+/*}*/

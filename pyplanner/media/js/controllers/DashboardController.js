@@ -104,12 +104,21 @@ $(function(){
 
                     $('#sortable').isotope({
                         itemSelector: '.stickli',
-                        /*masonry: {
-                            columnWidth: 150
-                        }*/
+//                        masonry: {
+//                            columnWidth: 150
+//                        },
                         masonryHorizontal: {
                             rowHeight: 150
-                        }
+                        },
+                        getSortData: {
+                            position: function($elem)
+                            {
+                                return parseInt($elem.attr("position"), 10);
+                            }
+                        },
+                        sortBy: 'position',
+                        sortAscending : false/*,
+                        animationEngine: false*/
                     });
                 }
             });
