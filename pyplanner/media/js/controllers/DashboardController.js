@@ -104,12 +104,6 @@ $(function(){
 
                     $('#sortable').isotope({
                         itemSelector: '.stickli',
-//                        masonry: {
-//                            columnWidth: 150
-//                        },
-                        masonryHorizontal: {
-                            rowHeight: 150
-                        },
                         getSortData: {
                             position: function($elem)
                             {
@@ -117,8 +111,8 @@ $(function(){
                             }
                         },
                         sortBy: 'position',
-                        sortAscending : false/*,
-                        animationEngine: false*/
+                        sortAscending : false,
+                        animationEngine: 'jquery'
                     });
                 }
             });

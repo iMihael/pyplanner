@@ -35,12 +35,15 @@ var StickerView = Backbone.View.extend({
     },
     rightResize: function(e)
     {
+        if(this.el.hasAttribute("bug"))
+            return;
+
         var margin = parseInt($(this.el).css("margin-right"));
         var currentWidth = this.model.get('width');
         var newWidth = currentWidth + this.minSize + margin;
-        var zIndex = $(this.el).css("z-index");
+        //var zIndex = $(this.el).css("z-index");
         var el = this.el;
-        $(el).css("z-index", this.nextZindex());
+        //$(el).css("z-index", this.nextZindex());
         this.model.set({width: newWidth});
         this.model.save();
 
@@ -48,7 +51,7 @@ var StickerView = Backbone.View.extend({
             width: newWidth + "px"
         }, 250, function(){
             $("#sortable").isotope( 'reLayout', function(){
-                $(el).attr("z-index", zIndex);
+                //$(el).attr("z-index", zIndex);
             } );
         });
     },
@@ -60,9 +63,9 @@ var StickerView = Backbone.View.extend({
             var margin = parseInt($(this.el).css("margin-right"));
             var currentWidth = this.model.get('width');
             var newWidth = currentWidth - this.minSize - margin;
-            var zIndex = $(this.el).css("z-index");
+            //var zIndex = $(this.el).css("z-index");
             var el = this.el;
-            $(el).css("z-index", this.nextZindex());
+            //$(el).css("z-index", this.nextZindex());
             this.model.set({width: newWidth});
             this.model.save();
 
@@ -70,7 +73,7 @@ var StickerView = Backbone.View.extend({
                 width: newWidth + "px"
             }, 250, function(){
                 $("#sortable").isotope('reLayout', function(){
-                    $(el).css("z-index", zIndex);
+                    //$(el).css("z-index", zIndex);
                 });
             });
         }
@@ -85,9 +88,9 @@ var StickerView = Backbone.View.extend({
                 var margin = parseInt($(this.el).css("margin-bottom"));
                 var currentHeight = this.model.get('height');
                 var newHeight = currentHeight - this.minSize - margin;
-                var zIndex = $(this.el).css("z-index");
+                //var zIndex = $(this.el).css("z-index");
                 var el = this.el;
-                $(this.el).css("z-index", this.nextZindex());
+                //$(this.el).css("z-index", this.nextZindex());
                 this.model.set({height: newHeight});
                 this.model.save();
 
@@ -95,7 +98,7 @@ var StickerView = Backbone.View.extend({
                     height: newHeight + "px"
                 }, 250, function(){
                     $("#sortable").isotope('reLayout', function(){
-                        $(el).css("z-index", zIndex);
+                        //$(el).css("z-index", zIndex);
                     });
                 });
             }
@@ -106,9 +109,9 @@ var StickerView = Backbone.View.extend({
         var margin = parseInt($(this.el).css("margin-bottom"));
         var currentHeight = this.model.get('height');
         var newHeight = currentHeight + this.minSize + margin;
-        var zIndex = $(this.el).css("z-index");
+        //var zIndex = $(this.el).css("z-index");
         var el = this.el;
-        $(this.el).css("z-index", this.nextZindex());
+        //$(this.el).css("z-index", this.nextZindex());
         this.model.set({height: newHeight});
         this.model.save();
 
@@ -116,7 +119,7 @@ var StickerView = Backbone.View.extend({
             height: newHeight + "px"
         }, 250, function(){
             $("#sortable").isotope('reLayout', function(){
-                $(el).css("z-index", zIndex);
+                //$(el).css("z-index", zIndex);
             });
         });
     },
@@ -179,10 +182,21 @@ var StickerView = Backbone.View.extend({
             $('#sortable').isotope({ sortBy : 'position' });
         }
         else
+        {
+            // mark bug sticker
+            if($(this.container).children().length == 0)
+            {
+                $(this.el).attr("bug", "1");
+                $(this.el).find(".right-bar").css("cursor", "default");
+                $(this.el).find(".left-bar").css("cursor", "default");
+                $(this.el).find(".rb-bar").css("cursor", "default");
+            }
+
             $(this.container).append(this.el);
+        }
 
         var el = this.el;
-        var view = this;
+
 
         $(el).droppable({
             over: function(){
