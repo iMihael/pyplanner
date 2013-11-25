@@ -10,6 +10,7 @@ class Color(models.Model):
     color_id = models.AutoField(primary_key=True)
     hex_value = models.CharField(max_length=7)
     name = models.CharField(max_length=16, blank=True, null=True)
+    font_color = models.CharField(max_length=7, default='000000')
 
     def __unicode__(self):
         return self.name if self.name else self.hex_value

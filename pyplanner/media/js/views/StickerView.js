@@ -8,13 +8,14 @@ var StickerView = Backbone.View.extend({
     template: '#stickerTemplate',
     container: '#sortable',
     color: 'ffffff',
+    font: '000000',
     minSize: 150,
 
     attributes : function () {
         return {
             class : this.className,
             id : 's' + this.model.get( 'sticker_id' ),
-            style: 'background: #'+ this.model.color + ";width:"+this.model.get("width")+"px;height:"+this.model.get("height")+"px;",
+            style: 'background: #'+ this.model.color + ";color: #"+this.model.font+";width:"+this.model.get("width")+"px;height:"+this.model.get("height")+"px;",
             position: this.model.get('position')
         };
     },
@@ -35,9 +36,6 @@ var StickerView = Backbone.View.extend({
     },
     rightResize: function(e)
     {
-        if(this.el.hasAttribute("bug"))
-            return;
-
         var margin = parseInt($(this.el).css("margin-right"));
         var currentWidth = this.model.get('width');
         var newWidth = currentWidth + this.minSize + margin;
@@ -154,14 +152,15 @@ var StickerView = Backbone.View.extend({
         $(e.currentTarget).find(".sArea").focus().val('').val(data);
     },
     initialize: function(options) {
-
+        this.font = this.model.font;
     },
     render: function() {
 
         this.template = $(this.template).html();
         this.context = {
             body: this.model.get("body"),
-            sticker_id: this.model.get("sticker_id")
+            sticker_id: this.model.get("sticker_id"),
+            font_color: this.font
         };
 
         var compiled = _.template(this.template, this.context);
@@ -183,15 +182,6 @@ var StickerView = Backbone.View.extend({
         }
         else
         {
-            // mark bug sticker
-            if($(this.container).children().length == 0)
-            {
-                $(this.el).attr("bug", "1");
-                $(this.el).find(".right-bar").css("cursor", "default");
-                $(this.el).find(".left-bar").css("cursor", "default");
-                $(this.el).find(".rb-bar").css("cursor", "default");
-            }
-
             $(this.container).append(this.el);
         }
 

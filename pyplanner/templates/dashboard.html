@@ -3,6 +3,7 @@
 {% block nav-dashboard %}active{% endblock %}
 
 {% block head %}
+    <script src="/media/js/libs/holder.js"></script>
     <script type="text/javascript" src="/media/js/libs/jquery.isotope.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="/media/css/stickers.css" />
@@ -12,6 +13,7 @@
     <script type="text/javascript" src="/media/js/views/StickerView.js"></script>
     <script type="text/javascript" src="/media/js/models/StickerModel.js"></script>
 	<script type="text/javascript" src="/media/js/controllers/DashboardController.js"></script>
+
 {% endblock %}
 
 {% block body %}
@@ -52,7 +54,7 @@
         </div>
 
 
-        <textarea stick="<%= sticker_id %>" class="sArea"><%= body %></textarea>
+        <textarea stick="<%= sticker_id %>" class="sArea" style="color: #<%=font_color%>"><%= body %></textarea>
         <div class="clearfix"></div>
         <div class="bottom-bar">
 
@@ -71,7 +73,9 @@
 
 	<div style="padding-top:10px;">
 		<div id="sortable">
-
+            <div class="stickli" style="width:151px;height:306px;background: #eeeeee;float:left;padding: 5px;" position="9854">
+                <img src="/media/js/libs/holder.js/140x295/text:Ad block"/>
+            </div>
 
 		</div>
 	</div>

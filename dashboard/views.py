@@ -40,7 +40,7 @@ def color(request):
 
 def colors(request):
     cols = Color.objects.all()
-    cols = list(cols.values('color_id', 'name', 'hex_value'))
+    cols = list(cols.values('color_id', 'name', 'hex_value', 'font_color'))
     return HttpResponse(json.dumps(cols))
 
 

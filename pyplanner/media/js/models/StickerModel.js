@@ -12,6 +12,7 @@ var StickerModel = Backbone.Model.extend({
         position: 0
     },
     color: 'ffffff',
+    font: '000000',
 
     updateView: function(model)
     {
@@ -36,6 +37,7 @@ var StickerModel = Backbone.Model.extend({
 
         var color = cCollection.where({color_id: this.get('color_id')})[0];
         this.color = color.get('hex_value');
+        this.font = color.get('font_color');
 
         if(this.get("sticker_id") != 0)
         {
