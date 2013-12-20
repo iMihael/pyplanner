@@ -27,6 +27,14 @@ var StickerModel = Backbone.Model.extend({
             $("#sortable").isotope('reLayout');
         }
     },
+    updateColor: function(model)
+    {
+        var color = cCollection.where({color_id: model.get('color_id')});
+        if(color.length > 0)
+        {
+            model.save();
+        }
+    },
     initialize: function(attributes, options){
 
         this.on("change:position", function (model){
@@ -34,6 +42,7 @@ var StickerModel = Backbone.Model.extend({
         });
 
         this.on("change:sticker_id", this.updateView);
+        this.on("change:color_id", this.updateColor);
 
         var color = cCollection.where({color_id: this.get('color_id')})[0];
         this.color = color.get('hex_value');

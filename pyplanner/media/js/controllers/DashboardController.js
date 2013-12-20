@@ -44,7 +44,24 @@ function hideAreas(e)
             sBody.show();
         }
     }
+
+
 }
+function nZindex(obj){
+       var highestIndex = 0;
+       var currentIndex = 0;
+       var elArray = Array();
+       if(obj){ elArray = obj.getElementsByTagName('*'); }else{ elArray = document.getElementsByTagName('*'); }
+       for(var i=0; i < elArray.length; i++){
+          if (elArray[i].currentStyle){
+             currentIndex = parseFloat(elArray[i].currentStyle['zIndex']);
+          }else if(window.getComputedStyle){
+             currentIndex = parseFloat(document.defaultView.getComputedStyle(elArray[i],null).getPropertyValue('z-index'));
+          }
+          if(!isNaN(currentIndex) && currentIndex > highestIndex){ highestIndex = currentIndex; }
+       }
+       return(highestIndex+1);
+    }
 
 $(function(){
     cCollection = new ColorCollection();
@@ -56,51 +73,6 @@ $(function(){
 
             stickCollection.fetch({
                 success: function(collection, response, options) {
-
-//                    $("#sortable").sortable({
-//                        stop: sortStop,
-//                        start: sortStart
-//                    });
-
-                    //$("#sortable").disableSelection();
-
-//                    $('.st_button').qtip({
-//                        position: {
-//                            my: 'bottom center',
-//                            at: 'top center'
-//                        },
-//                        style: {
-//                            classes: 'qtip-light'
-//                        },
-//                        show: {
-//                            solo: true
-//                        }
-//                    });
-
-//                    $('.ccolor').qtip({
-//                        position: {
-//                            my: 'center center',
-//                            at: 'top center'
-//                        },
-//                        show: {
-//                            event: 'click',
-//                            solo: true
-//                        },
-//                        hide: 'unfocus',
-//                        content: {
-//                            text: function(event, api){
-//                                return $(".tipColors").html();
-//                            },
-//                            title: "Choose sticker color",
-//                            button: true
-//                        },
-//                        style: {
-//                            classes: 'qtip-light'
-//                        }
-//                    });
-
-                    //console.log(maxWidth);
-
 
                     $('#sortable').isotope({
                         itemSelector: '.stickli',
@@ -114,6 +86,29 @@ $(function(){
                         sortAscending : false,
                         animationEngine: 'jquery'
                     });
+
+
+
+//                    $('.btn_ccolor').popover({
+//                        placement: 'top',
+//                        title: 'Pick a color',
+//                        html: true,
+//                        content: $(".tipColors").html(),
+//                        container: 'body'
+//                    });
+//
+//                    $('.btn_ccolor').on('show.bs.popover', function () {
+//                        $('.btn_ccolor').popover('hide')
+//                    });
+//
+//                    $('.btn_ccolor').on('shown.bs.popover', function () {
+//                        $(".popover").css("z-index", nZindex());
+//                        $(".popover").unbind();
+//                        $(".popover").click(function(e){
+//                            alert();
+//                            return false;
+//                        });
+//                    });
                 }
             });
         }

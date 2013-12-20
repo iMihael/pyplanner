@@ -23,6 +23,7 @@ var StickerView = Backbone.View.extend({
     events: {
         'click .btn_trash': 'hideSticker',
         'click .btn_archive': 'hideSticker',
+        'click .btn_edit': 'editSticker',
         'dblclick': 'showEditArea',
         'click .ccolor': 'noAnchor',
         'click .header': 'topResize',
@@ -33,6 +34,12 @@ var StickerView = Backbone.View.extend({
         'click .rb-bar': 'rightBottomResize'
         /*'mouseover .header': 'enableSort',
         'mouseout .header': 'disableSort'*/
+    },
+    editSticker: function(e)
+    {
+        e.currentTarget = e.currentTarget.parentNode.parentNode;
+        this.showEditArea(e);
+        return false;
     },
     rightResize: function(e)
     {
@@ -186,6 +193,7 @@ var StickerView = Backbone.View.extend({
         }
 
         var el = this.el;
+        var model = this.model;
 
 
         $(el).droppable({
@@ -258,6 +266,38 @@ var StickerView = Backbone.View.extend({
             }
         });
 
+        var c_color = $(this.el).find(".btn_ccolor");
+
+        $(c_color).popover({
+            placement: 'top',
+            title: 'Pick a color',
+            html: true,
+            content: $(".tipColors").html(),
+            container: 'body'
+        });
+
+        $(c_color).on('show.bs.popover', function () {
+            $('.btn_ccolor').popover('hide')
+        });
+
+        $(c_color).on('shown.bs.popover', function () {
+            $(".popover").css("z-index", nZindex());
+            $(".popover").unbind();
+            $(".popover").click(function(e){
+                var color_id = parseInt($(e.target).attr("cid"));
+                model.set({'color_id': color_id });
+                $(el).find('.btn_ccolor').popover('hide');
+                var color = cCollection.where({color_id: color_id});
+                if(color.length > 0)
+                {
+                    color = color[0];
+                    var hex = color.get('hex_value');
+                    $(el).css('background', '#'+hex);
+                }
+                return false;
+            });
+        });
+
         return this;
     },
     hideSticker: function(e){
@@ -282,6 +322,9 @@ var StickerView = Backbone.View.extend({
             stickView.model.destroy();
 
             $(stick).remove();
+
+            $("#sortable").isotope( 'reloadItems' );
+            $('#sortable').isotope({ sortBy : 'position' });
         });
 
         return false;

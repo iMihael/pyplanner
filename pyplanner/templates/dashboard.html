@@ -19,16 +19,16 @@
 {% block body %}
 
     <script id="colorTemplate" type="text/template">
-        <a href="#" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
+        <a href="#" cid="<%= color_id %>" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
     </script>
 
     <script id="stickerTemplate" type="text/template">
         <div class="lt-bar"></div>
         <div class="header">
-            <a href="#" class="st_button" title="Edit">
+            <a href="#" class="st_button btn_edit" title="Edit">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
-            <a href="#" class="st_button" title="Change color">
+            <a href="#" class="st_button btn_ccolor" title="Change sticker color">
                 <span class="glyphicon glyphicon-tint ccolor"></span>
             </a>
 
@@ -62,9 +62,11 @@
         <div class="rb-bar"></div>
     </script>
 
+
     <div class="tipColors">
 
     </div>
+
 
 	<div style="" class="colors">
 

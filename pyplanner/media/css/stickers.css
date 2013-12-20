@@ -163,6 +163,10 @@
     overflow: hidden;
     border-radius: 3px;
 }
+body,html
+{
+    height:100%;
+}
 .stickli .sbody
 {
     /*margin-left:15px;*/
@@ -295,3 +299,9 @@
        /*-o-transition-duration: 0s;*/
           /*transition-duration: 0s;*/
 /*}*/
+
+
+.popover-content
+{
+    min-height: 32px;
+}
