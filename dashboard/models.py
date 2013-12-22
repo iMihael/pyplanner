@@ -56,4 +56,4 @@ def create_user_stickers(sender, instance, created, **kwargs):
             sticker.save()
 
 
-post_save.connect(create_user_stickers, sender=User)
+## post_save.connect(create_user_stickers, sender=User)
