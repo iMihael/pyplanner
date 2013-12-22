@@ -15,6 +15,33 @@ def index(request):
     return rtr('dashboard', view_params)
 
 
+def archive(request, page):
+    page = int(page)
+    limit = 20
+    offset = page * limit
+    limit += offset
+    sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True, archived__isnull=False).order_by('-archived')[offset:limit]
+    count = Sticker.objects.filter(owner=request.user, deleted__isnull=True, archived__isnull=False).count()
+    back_p = False
+    next_p = False
+
+    if limit < count:
+        next_p = page+1
+
+    if page > 0:
+        back_p = page-1
+
+    view_params = {
+        'user_logged': request.user.is_authenticated(),
+        'username': request.user.username if request.user.is_authenticated() else False,
+        'stickers': sticks,
+        'back': back_p,
+        'next': next_p,
+        'page': page,
+    }
+    return rtr('archive', view_params)
+
+
 def color(request):
     if 'color_id' in request.GET:
         try:
@@ -50,6 +77,19 @@ def stickers(request):
     return HttpResponse(json.dumps(sticks))
 
 
+def sticker_restore(request, sticker_id):
+    try:
+        stick = Sticker.objects.get(pk=sticker_id, owner=request.user)
+    except Sticker.DoesNotExist:
+        raise Http404
+    else:
+        stick.archived = None
+        stick.deleted = None
+        stick.save()
+        return HttpResponse(1)
+    return HttpResponse(0)
+
+
 def sticker_archive(request, sticker_id):
     try:
         stick = Sticker.objects.get(pk=sticker_id, owner=request.user)
@@ -57,11 +97,13 @@ def sticker_archive(request, sticker_id):
         raise Http404
     else:
         if request.method == 'DELETE':
-            Sticker.objects.filter(position__gt=stick.position).update(position=F('position')-1)
-
-            stick.position = -1
-            stick.archived = datetime.now()
-            stick.save()
+            Sticker.objects.filter(owner=request.user, position__gt=stick.position).update(position=F('position')-1)
+            if not stick.body:
+                stick.delete()
+            else:
+                stick.position = -1
+                stick.archived = datetime.now()
+                stick.save()
             return HttpResponse(1)
     return HttpResponse(0)
 
@@ -73,11 +115,13 @@ def sticker_update(request, sticker_id):
         raise Http404
     else:
         if request.method == 'DELETE':
-            Sticker.objects.filter(position__gt=stick.position).update(position=F('position')-1)
-
-            stick.position = -1
-            stick.deleted = datetime.now()
-            stick.save()
+            Sticker.objects.filter(owner=request.user, position__gt=stick.position).update(position=F('position')-1)
+            if not stick.body:
+                stick.delete()
+            else:
+                stick.position = -1
+                stick.deleted = datetime.now()
+                stick.save()
 
             return HttpResponse(1)
     return HttpResponse(0)

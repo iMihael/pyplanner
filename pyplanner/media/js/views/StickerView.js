@@ -244,7 +244,7 @@ var StickerView = Backbone.View.extend({
 
                 var sticker = stickCollection.where({sticker_id: sticker_id})[0];
                 sticker.set({position: curPosition});
-                sticker.save();
+                //sticker.save();
 
 
                 //$(ui.draggable).css("top", 0);

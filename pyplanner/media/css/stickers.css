@@ -305,3 +305,8 @@ body,html
 {
     min-height: 32px;
 }
+
+.remove_btn
+{
+    color:#000;
+}

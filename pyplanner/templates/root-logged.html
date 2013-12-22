@@ -26,12 +26,12 @@
 						<li class="{% block nav-dashboard %}{% endblock %}">
 							<a href="{% url 'dashboard.views.index' %}"><span class="glyphicon glyphicon-th-large"></span> Dashboard</a>
 						</li>
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-inbox"></span> Archive</a>
+                        <li class="{% block nav-archive %}{% endblock %}">
+                            <a href="{% url 'dashboard.views.archive' page=0 %}"><span class="glyphicon glyphicon-inbox"></span> Archive</a>
                         </li>
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-trash"></span> Trash</a>
-                        </li>
+{#                        <li>#}
+{#                            <a href="#"><span class="glyphicon glyphicon-trash"></span> Trash</a>#}
+{#                        </li>#}
 {#						<li class="{% block nav-planner %}{% endblock %}">#}
 {#							<a href="#">Planner</a>#}
 {#						</li>#}

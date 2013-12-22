@@ -7,6 +7,8 @@ urlpatterns = patterns('',
                        url(r'^colors/$', views.colors),
                        url(r'^stickers/$', views.stickers),
                        url(r'^sticker/$', views.sticker),
-                       url(r'^sticker/(\d+)$', views.sticker_update),
+                       url(r'^sticker/(?P<sticker_id>\d+)$', views.sticker_update),
                        url(r'^sticker-archive/(\d+)$', views.sticker_archive),
+                       url(r'^archive/(?P<page>\d+)$', views.archive),
+                       url(r'^restore/(?P<sticker_id>\d+)$', views.sticker_restore)
 )
