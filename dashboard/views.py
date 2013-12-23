@@ -1,6 +1,6 @@
 from pyplanner.wrappers import rtr
 from dashboard.models import Sticker, Color
-from django.db.models import F
+from django.db.models import F, Max
 from django.http import HttpResponse, Http404
 from dashboard.forms import ColorForm, StickerForm
 from datetime import datetime
@@ -83,6 +83,8 @@ def sticker_restore(request, sticker_id):
     except Sticker.DoesNotExist:
         raise Http404
     else:
+        max_position = Sticker.objects.filter(owner=request.user).aggregate(Max('position'))
+        stick.position = max_position['position__max'] + 1
         stick.archived = None
         stick.deleted = None
         stick.save()
