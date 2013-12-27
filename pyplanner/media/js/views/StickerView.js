@@ -165,7 +165,7 @@ var StickerView = Backbone.View.extend({
 
         this.template = $(this.template).html();
         this.context = {
-            body: this.model.get("body"),
+            body: this.model.nl2br(this.model.get("body")),
             sticker_id: this.model.get("sticker_id"),
             font_color: this.font
         };

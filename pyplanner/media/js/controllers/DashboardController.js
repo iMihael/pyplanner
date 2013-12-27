@@ -32,13 +32,15 @@ function hideAreas(e)
         {
             if(sBody.html().trim() != area.val())
             {
-                var newText = area.val().trim();
-                sBody.html(newText);
 
+                var newText = area.val().trim();
                 var stick = parseInt(area.attr("stick"));
                 var sticker = stickCollection.where({sticker_id: stick})[0];
                 sticker.set({body: newText});
                 sticker.save();
+
+
+                sBody.html(sticker.nl2br(newText));
             }
             area.hide();
             sBody.show();
