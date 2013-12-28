@@ -14,11 +14,7 @@ var StickerModel = Backbone.Model.extend({
     color: 'ffffff',
     font: '000000',
 
-    nl2br: function(text)
-    {
-        text = text.replace(/\n/g,"<br />");
-        return text;
-    },
+
     updateView: function(model)
     {
         if(model.view == false)

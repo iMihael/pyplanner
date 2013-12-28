@@ -39,8 +39,7 @@ function hideAreas(e)
                 sticker.set({body: newText});
                 sticker.save();
 
-
-                sBody.html(sticker.nl2br(newText));
+                sBody.html(sticker.view.nl2br(sticker.view.encode(newText)));
             }
             area.hide();
             sBody.show();
@@ -90,27 +89,6 @@ $(function(){
                     });
 
 
-
-//                    $('.btn_ccolor').popover({
-//                        placement: 'top',
-//                        title: 'Pick a color',
-//                        html: true,
-//                        content: $(".tipColors").html(),
-//                        container: 'body'
-//                    });
-//
-//                    $('.btn_ccolor').on('show.bs.popover', function () {
-//                        $('.btn_ccolor').popover('hide')
-//                    });
-//
-//                    $('.btn_ccolor').on('shown.bs.popover', function () {
-//                        $(".popover").css("z-index", nZindex());
-//                        $(".popover").unbind();
-//                        $(".popover").click(function(e){
-//                            alert();
-//                            return false;
-//                        });
-//                    });
                 }
             });
         }

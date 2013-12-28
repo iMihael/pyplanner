@@ -4,7 +4,11 @@ from django.db.models import F, Max
 from django.http import HttpResponse, Http404
 from dashboard.forms import ColorForm, StickerForm
 from datetime import datetime
+import time
 import json
+import urllib
+import hashlib
+import os.path
 
 
 def index(request):
@@ -13,6 +17,16 @@ def index(request):
         'username': request.user.username if request.user.is_authenticated() else False,
     }
     return rtr('dashboard', view_params)
+
+
+def get_bg(request, sticker_id, url):
+    #http://mini.s-shot.ru/?http://forumenko.ru
+    h = hashlib.sha1()
+    h.update(url + str(time.time()))
+    f_name = h.hexdigest()
+    images_path = os.path.dirname(os.path.realpath(__file__)) + "/../media/img"
+    urllib.urlretrieve(url, images_path + "/" + f_name)
+    return HttpResponse(1)
 
 
 def archive(request, page):

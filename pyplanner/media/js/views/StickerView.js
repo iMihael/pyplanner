@@ -109,6 +109,43 @@ var StickerView = Backbone.View.extend({
             }
         }
     },
+    nl2br: function(text)
+    {
+        text = text.replace(/\n/g,"<br />");
+        return text;
+    },
+    encode: function(text)
+    {
+        return _.escape(text);
+    },
+    findUrls: function( text )
+    {
+        var source = (text || '').toString();
+        var urlArray = [];
+        var url;
+        var matchArray;
+
+        // Regular expression to find FTP, HTTP(S) and email URLs.
+        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+
+        // Iterate through any URLs in the text.
+        while( (matchArray = regexToken.exec( source )) !== null )
+        {
+            var token = matchArray[0];
+            urlArray.push( token );
+        }
+
+        return urlArray;
+    },
+    replaceUrls:function (text)
+    {
+        var urls = this.findUrls(text);
+        for(var i=0;i<urls.length;i++)
+        {
+            text = text.replace(new RegExp(urls[i],'g'), '<a href="'+urls[i]+'">'+urls[i]+'</a>');
+        }
+        return text;
+    },
     bottomResize: function(e)
     {
         var margin = parseInt($(this.el).css("margin-bottom"));
@@ -165,7 +202,7 @@ var StickerView = Backbone.View.extend({
 
         this.template = $(this.template).html();
         this.context = {
-            body: this.model.nl2br(this.model.get("body")),
+            body: this.replaceUrls(this.nl2br(_.escape(this.model.get("body")))),
             sticker_id: this.model.get("sticker_id"),
             font_color: this.font
         };
@@ -297,6 +334,12 @@ var StickerView = Backbone.View.extend({
                 return false;
             });
         });
+
+        var urls = this.findUrls(this.nl2br(_.escape(this.model.get("body"))));
+        if(urls.length == 1)
+        {
+            $.get("/a/dashboard/get_bg/" + this.model.get("sticker_id") + "/" + urls[0]);
+        }
 
         return this;
     },
