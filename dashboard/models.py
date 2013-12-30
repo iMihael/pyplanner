@@ -39,6 +39,11 @@ class Sticker(models.Model):
         ordering = ['-position']
 
 
+class Bgimage(models.Model):
+    name = models.CharField(max_length=64, primary_key=True)
+    url = models.CharField(max_length=2048)
+
+
 #def create_user_stickers(sender, instance, created, **kwargs):
 #    if created:
 #        colors = Color.objects.all()

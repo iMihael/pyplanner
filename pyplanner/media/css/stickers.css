@@ -112,7 +112,7 @@
     width: 15px;
     /*background:red;*/
     height:15px;
-    border: inherit;
+    /*border: inherit;*/
     border-top-left-radius: 2px;
     cursor: nw-resize;
 }

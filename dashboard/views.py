@@ -1,10 +1,10 @@
 from pyplanner.wrappers import rtr
-from dashboard.models import Sticker, Color
+from dashboard.models import Sticker, Color, Bgimage
 from django.db.models import F, Max
 from django.http import HttpResponse, Http404
 from dashboard.forms import ColorForm, StickerForm
+from pyplanner.models import Config
 from datetime import datetime
-import time
 import json
 import urllib
 import hashlib
@@ -12,21 +12,44 @@ import os.path
 
 
 def index(request):
+    try:
+        ad_code = Config.objects.get(pk='adblock_code')
+    except Config.DoesNotExist:
+        ad_code = ''
+    else:
+        ad_code = ad_code.value
+
     view_params = {
         'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
+        'ad_code': ad_code,
     }
     return rtr('dashboard', view_params)
 
 
-def get_bg(request, sticker_id, url):
-    #http://mini.s-shot.ru/?http://forumenko.ru
-    h = hashlib.sha1()
-    h.update(url + str(time.time()))
-    f_name = h.hexdigest()
-    images_path = os.path.dirname(os.path.realpath(__file__)) + "/../media/img"
-    urllib.urlretrieve(url, images_path + "/" + f_name)
-    return HttpResponse(1)
+def get_bg(request, url):
+    try:
+        snap_service = Config.objects.get(pk='snap_service')
+    except Config.DoesNotExist:
+        return HttpResponse('Snap service is not set')
+    else:
+        snap_service = snap_service.value
+        snap_service = snap_service.replace('{url}', url)
+        h = hashlib.sha1()
+        h.update(url)
+        f_name = h.hexdigest()
+        image_path = os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/img/" + f_name
+        try:
+            Bgimage.objects.get(pk=f_name)
+        except Bgimage.DoesNotExist:
+            image = Bgimage(name=f_name, url=url)
+            urllib.urlretrieve(snap_service, image_path)
+            image.save()
+
+        handle = open(image_path, 'r+')
+        content = handle.read()
+        response = HttpResponse(content, content_type='image')
+        return response
 
 
 def archive(request, page):

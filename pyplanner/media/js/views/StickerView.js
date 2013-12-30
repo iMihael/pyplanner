@@ -338,7 +338,13 @@ var StickerView = Backbone.View.extend({
         var urls = this.findUrls(this.nl2br(_.escape(this.model.get("body"))));
         if(urls.length == 1)
         {
-            $.get("/a/dashboard/get_bg/" + this.model.get("sticker_id") + "/" + urls[0]);
+            $.get("/a/dashboard/get_bg/" + urls[0], function(data){
+                $(el).css("background", "url('/a/dashboard/get_bg/" + urls[0]+"')");
+                $(el).css("border-color", "#777777");
+                $(el).css("border-width", "1px");
+                $(el).css("border-style", "solid");
+
+            });
         }
 
         return this;

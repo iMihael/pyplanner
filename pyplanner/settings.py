@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social_auth',
     'dashboard',
+    'pyplanner',
 )
 
 AUTHENTICATION_BACKENDS = (
