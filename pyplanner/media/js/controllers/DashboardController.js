@@ -1,26 +1,6 @@
 var cCollection;
 var stickCollection;
 
-function sortStop(event, ui)
-{
-    var offset = parseInt(ui.item.attr("index")) - parseInt(ui.item.index());
-    if(offset != 0)
-    {
-        var sticker_id = parseInt(ui.item.attr("id").substr(1));
-
-        var sticker = stickCollection.where({sticker_id: sticker_id})[0];
-        var sPosition = parseInt(sticker.get('position'));
-
-        sPosition += offset;
-        sticker.set({position: sPosition});
-    }
-}
-
-function sortStart(event, ui)
-{
-    ui.item.attr("index", ui.item.index());
-}
-
 function hideAreas(e)
 {
     if((typeof(e) == 'boolean' && e) || e.target.className != 'sArea')
@@ -39,7 +19,7 @@ function hideAreas(e)
                 sticker.set({body: newText});
                 sticker.save();
 
-                sBody.html(sticker.view.nl2br(sticker.view.encode(newText)));
+                sBody.html(sticker.view.replaceUrls(sticker.view.nl2br(sticker.view.encode(newText))));
             }
             area.hide();
             sBody.show();

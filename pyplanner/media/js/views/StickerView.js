@@ -142,7 +142,7 @@ var StickerView = Backbone.View.extend({
         var urls = this.findUrls(text);
         for(var i=0;i<urls.length;i++)
         {
-            text = text.replace(new RegExp(urls[i],'g'), '<a href="'+urls[i]+'">'+urls[i]+'</a>');
+            text = text.replace(new RegExp(urls[i],'g'), '<a target="_blank" href="'+urls[i]+'">'+urls[i]+'</a>');
         }
         return text;
     },
@@ -190,10 +190,11 @@ var StickerView = Backbone.View.extend({
     },
     showEditArea: function(e)
     {
+        var body = this.model.get("body");
         $(e.currentTarget).find(".sbody").hide();
         $(e.currentTarget).find(".sArea").show();
-        var data = $(e.currentTarget).find(".sArea").val();
-        $(e.currentTarget).find(".sArea").focus().val('').val(data);
+        //var data = $(e.currentTarget).find(".sArea").val();
+        $(e.currentTarget).find(".sArea").focus().val('').val(body);
     },
     initialize: function(options) {
         this.font = this.model.font;
@@ -335,17 +336,17 @@ var StickerView = Backbone.View.extend({
             });
         });
 
-        var urls = this.findUrls(this.nl2br(_.escape(this.model.get("body"))));
-        if(urls.length == 1)
-        {
-            $.get("/a/dashboard/get_bg/" + urls[0], function(data){
-                $(el).css("background", "url('/a/dashboard/get_bg/" + urls[0]+"')");
-                $(el).css("border-color", "#777777");
-                $(el).css("border-width", "1px");
-                $(el).css("border-style", "solid");
-
-            });
-        }
+//        var urls = this.findUrls(this.nl2br(_.escape(this.model.get("body"))));
+//        if(urls.length == 1)
+//        {
+//            $.get("/a/dashboard/get_bg/" + urls[0], function(data){
+//                $(el).css("background", "url('/a/dashboard/get_bg/" + urls[0]+"')");
+//                $(el).css("border-color", "#777777");
+//                $(el).css("border-width", "1px");
+//                $(el).css("border-style", "solid");
+//
+//            });
+//        }
 
         return this;
     },
