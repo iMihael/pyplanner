@@ -13,7 +13,7 @@ def index_page(request):
     return rtr('index', view_params)
 
 
-@user_passes_test(lambda u: not u.is_authenticated(), 'pyplanner.views.index_page', '')
+@user_passes_test(lambda u: not u.is_authenticated(), 'dashboard.views.index', '')
 def login_form(request):
     if 'login' in request.POST:
         lf = LoginForm(request.POST)

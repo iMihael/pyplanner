@@ -24,14 +24,20 @@
                 <nav class="collapse navbar-collapse bs-navbar-collapse navbar-ex1-collapse" role="navigation">
                     <ul class="nav navbar-nav">
 						<li class="{% block nav-dashboard %}{% endblock %}">
-							<a href="{% url 'dashboard.views.index' %}">Dashboard</a>
+							<a href="{% url 'dashboard.views.index' %}"><span class="glyphicon glyphicon-th-large"></span> Dashboard</a>
 						</li>
-						<li class="{% block nav-planner %}{% endblock %}">
-							<a href="#">Planner</a>
-						</li>
-						<li class="{% block nav-todo %}{% endblock %}">
-							<a href="#">Todo</a>
-						</li>
+                        <li class="{% block nav-archive %}{% endblock %}">
+                            <a href="{% url 'dashboard.views.archive' page=0 %}"><span class="glyphicon glyphicon-inbox"></span> Archive</a>
+                        </li>
+{#                        <li>#}
+{#                            <a href="#"><span class="glyphicon glyphicon-trash"></span> Trash</a>#}
+{#                        </li>#}
+{#						<li class="{% block nav-planner %}{% endblock %}">#}
+{#							<a href="#">Planner</a>#}
+{#						</li>#}
+{#						<li class="{% block nav-todo %}{% endblock %}">#}
+{#							<a href="#">Todo</a>#}
+{#						</li>#}
 					</ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -41,9 +47,9 @@
 							<li class="dropdown {% block nav-profile %}{% endblock %}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Manage profile</a>
-									</li>
+{#									<li>#}
+{#										<a href="#">Manage profile</a>#}
+{#									</li>#}
                                     <li>
                                         <a href="{% url 'pyplanner.views.logout_view' %}">Logout</a>
                                     </li>
@@ -63,26 +69,25 @@
 								</ul>
 							</li>
 						{% endif %}
-						<li class="dropdown" style="border-left:1px solid #ccc;">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<span class="glyphicon glyphicon-home"></span>
-{#								<b class="caret"></b>#}
-							</a>
-							<ul class="dropdown-menu">
-								<li class="{% block nav-home %}{% endblock %}">
-								  <a href="{% url 'pyplanner.views.index_page' %}">Home</a>
-								</li>
-								<li class="{% block nav-about %}{% endblock %}">
-								  <a href="{% url 'pyplanner.views.about' %}">About</a>
-								</li>
-								<li class="{% block nav-blog %}{% endblock %}">
-								  <a href="#">Blog</a>
-								</li>
-								<li class="{% block nav-contacts %}{% endblock %}">
-								  <a href="{% url 'pyplanner.views.contacts' %}">Contacts</a>
-								</li>
-							</ul>
-						</li>
+{#						<li class="dropdown" style="border-left:1px solid #ccc;">#}
+{#							<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+{#								<span class="glyphicon glyphicon-home"></span>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu">#}
+{#								<li class="{% block nav-home %}{% endblock %}">#}
+{#								  <a href="{% url 'pyplanner.views.index_page' %}">Home</a>#}
+{#								</li>#}
+{#								<li class="{% block nav-about %}{% endblock %}">#}
+{#								  <a href="{% url 'pyplanner.views.about' %}">About</a>#}
+{#								</li>#}
+{#								<li class="{% block nav-blog %}{% endblock %}">#}
+{#								  <a href="#">Blog</a>#}
+{#								</li>#}
+{#								<li class="{% block nav-contacts %}{% endblock %}">#}
+{#								  <a href="{% url 'pyplanner.views.contacts' %}">Contacts</a>#}
+{#								</li>#}
+{#							</ul>#}
+{#						</li>#}
                     </ul>
                 </nav>
 

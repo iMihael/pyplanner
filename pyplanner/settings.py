@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'aq=l8!lc$fe$q0@decf4r5rq6yqvo=(gcmf)e7cj$szc%so_z$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = False
+#DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social_auth',
     'dashboard',
-    'debug_toolbar',
+    'pyplanner',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -94,26 +94,14 @@ SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'pyplanner.middleware.RequireLoginMiddleware',
-
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-)
+
 
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -134,12 +122,19 @@ WSGI_APPLICATION = 'pyplanner.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pyplanner',
-        'USER': 'root',
-        'PASSWORD': 'didiom17',
-        'HOST': '127.0.0.1',
+    "default": {
+        # Add "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
+        "ENGINE": "django.db.backends.",
+        # DB name or path to database file if using sqlite3.
+        "NAME": "",
+        # Not used with sqlite3.
+        "USER": "",
+        # Not used with sqlite3.
+        "PASSWORD": "",
+        # Set to empty string for localhost. Not used with sqlite3.
+        "HOST": "",
+        # Set to empty string for default. Not used with sqlite3.
+        "PORT": "",
     }
 }
 
@@ -164,23 +159,16 @@ STATIC_URL = '/static/'
 
 MEDIA_PATH = os.path.dirname(__file__) + '/media/'
 
-LOGGING = {
-    'disable_existing_loggers': True,
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'django.db': {
 
-        },
-    },
-}
+
+##################
+# LOCAL SETTINGS #
+##################
+
+# Allow any settings to be defined in local_settings.py which should be
+# ignored in your version control system allowing for settings to be
+# defined per machine.
+try:
+    from local_settings import *
+except ImportError:
+    pass

@@ -3,6 +3,9 @@
 {% block nav-dashboard %}active{% endblock %}
 
 {% block head %}
+    <script src="/media/js/libs/holder.js"></script>
+    <script type="text/javascript" src="/media/js/libs/jquery.isotope.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="/media/css/stickers.css" />
 
     <script type="text/javascript" src="/media/js/views/ColorView.js"></script>
@@ -10,19 +13,25 @@
     <script type="text/javascript" src="/media/js/views/StickerView.js"></script>
     <script type="text/javascript" src="/media/js/models/StickerModel.js"></script>
 	<script type="text/javascript" src="/media/js/controllers/DashboardController.js"></script>
+
 {% endblock %}
 
 {% block body %}
 
     <script id="colorTemplate" type="text/template">
-        <a href="#" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
+        <a href="#" cid="<%= color_id %>" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
     </script>
 
     <script id="stickerTemplate" type="text/template">
+        <div class="lt-bar"></div>
         <div class="header">
-            <a href="#" class="st_button" title="Change color">
+            <a href="#" class="st_button btn_edit" title="Edit">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <a href="#" class="st_button btn_ccolor" title="Change sticker color">
                 <span class="glyphicon glyphicon-tint ccolor"></span>
             </a>
+
 {#            <a href="#" class="st_button" title="Notification">#}
 {#                <span class="glyphicon glyphicon-bell"></span>#}
 {#            </a>#}
@@ -35,17 +44,30 @@
                 <span class="glyphicon glyphicon-trash"></span>
             </a>
         </div>
-        <div class="clearfix"></div>
+        <div class="left-bar"></div>
         <div class="sbody">
             <%= body %>
         </div>
-        <textarea stick="<%= sticker_id %>" class="sArea"><%= body %></textarea>
 
+        <div class="right-bar">
+
+        </div>
+
+
+        <textarea stick="<%= sticker_id %>" class="sArea" style="color: #<%=font_color%>"><%= body %></textarea>
+        <input type="hidden" value="" class="original" />
+        <div class="clearfix"></div>
+        <div class="bottom-bar">
+
+        </div>
+        <div class="rb-bar"></div>
     </script>
+
 
     <div class="tipColors">
 
     </div>
+
 
 	<div style="" class="colors">
 
@@ -53,10 +75,13 @@
 	<h2>Dashboard</h2>
 
 	<div style="padding-top:10px;">
-		<ul id="sortable">
+		<div id="sortable">
+            <div class="stickli" style="width:151px;height:306px;background: #eeeeee;float:left;padding: 5px;" position="9854">
+                {{ ad_code }}
+{#                <img src="/media/js/libs/holder.js/140x295/text:Ad block"/>#}
+            </div>
 
-
-		</ul>
+		</div>
 	</div>
 
 

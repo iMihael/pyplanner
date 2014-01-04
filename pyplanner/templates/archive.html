@@ -1,0 +1,53 @@
+{% extends "root-logged.html" %}
+{% block title %}Archive{% endblock %}
+{% block nav-archive %}active{% endblock %}
+
+{% block head %}
+	<link rel="stylesheet" type="text/css" href="/media/css/stickers.css" />
+
+{#    <script type="text/javascript" src="/media/js/views/ColorView.js"></script>#}
+{#    <script type="text/javascript" src="/media/js/models/ColorModel.js"></script>#}
+{#    <script type="text/javascript" src="/media/js/views/StickerView.js"></script>#}
+{#    <script type="text/javascript" src="/media/js/models/StickerModel.js"></script>#}
+	<script type="text/javascript" src="/media/js/controllers/ArchiveController.js"></script>
+
+{% endblock %}
+
+{% block body %}
+
+
+<h2>Archive</h2>
+{% if stickers %}
+<table class="table">
+    <thead>
+        <th>Sticker</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        {% for sticker in stickers %}
+        <tr sticker_id="{{ sticker.sticker_id }}" style="background:#{{ sticker.color.hex_value }}">
+            <td style="color:#{{ sticker.color.font_color }}">{{ sticker.body }}</td>
+            <td>
+                <a href="{% url 'dashboard.views.sticker_restore' sticker_id=sticker.sticker_id %}" class="remove_btn"><span title="Restore" class="glyphicon glyphicon-share-alt"></span></a>
+                <a href="{% url 'dashboard.views.sticker_update' sticker_id=sticker.sticker_id %}" class="remove_btn"><span title="Delete" class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <div style="margin-bottom: 10px;">
+        {% if page > 0%}
+        <a href="{% url 'dashboard.views.archive' page=back %}" class="btn btn-default">Prev</a>
+        {% endif %}
+
+        {% if next %}
+        <a href="{% url 'dashboard.views.archive' page=next %}" class="btn btn-default pull-right">Next</a>
+        {% endif %}
+        <div class="clearfix"></div>
+    </div>
+    {% else %}
+        <div class="alert alert-info">Archive is empty</div>
+    {% endif %}
+
+
+
+{% endblock %}

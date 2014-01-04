@@ -3,7 +3,8 @@ var ColorModel = Backbone.Model.extend({
     defaults: {
         color_id: 0,
         hex_value: 'ffffff',
-        name: 'white'
+        name: 'white',
+        font_color: '000000'
     },
     initialize: function(){
         //console.log('Color model init.' + this.get('hex_value'));
