@@ -23,11 +23,52 @@ function hideAreas(e)
             }
             area.hide();
             sBody.show();
+            initTooltips();
         }
     }
 
 
 }
+
+function initTooltips()
+{
+    $.each($('.u-tip'), function(key, value){
+        var href = $(value).attr('href');
+        var body = '<img class="u-loader" src="/media/images/loader.gif" />';
+        $(value).tooltip({
+            html: true,
+            placement: 'left',
+            title: body,
+            container: 'body',
+            delay: { show: 500, hide: 100 }
+        });
+
+        body = '<img src="/a/dashboard/get_bg/'+href+'" />';
+        $.get("/a/dashboard/get_bg/" + href, function(data){
+            if(data == "0")
+            {
+                $(value).tooltip('destroy');
+                return;
+            }
+            var show = $('.u-loader').length;
+
+            $(value).tooltip('destroy');
+            $(value).tooltip({
+                html: true,
+                placement: 'left',
+                title: body,
+                container: 'body',
+                delay: { show: 500, hide: 100 }
+            });
+
+            if(show)
+            {
+                $(value).tooltip('show')
+            }
+        });
+    });
+}
+
 function nZindex(obj){
        var highestIndex = 0;
        var currentIndex = 0;
@@ -68,6 +109,7 @@ $(function(){
                         animationEngine: 'jquery'
                     });
 
+                    initTooltips();
 
                 }
             });

@@ -147,7 +147,7 @@ var StickerView = Backbone.View.extend({
 //            text = text.replace(new RegExp(urls[i],'g'), '<a target="_blank" href="'+urls[i]+'">'+urls[i]+'</a>');
 //        }
         var regexToken = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-        return text.replace(regexToken,"<a target='_blank' href='$1'>$1</a>");
+        return text.replace(regexToken,"<a class='u-tip' target='_blank' href='$1'>$1</a>");
         return text;
     },
     bottomResize: function(e)
@@ -334,7 +334,9 @@ var StickerView = Backbone.View.extend({
                 {
                     color = color[0];
                     var hex = color.get('hex_value');
+                    var font = color.get('font_color');
                     $(el).css('background', '#'+hex);
+                    $(el).css('color', '#'+font);
                 }
                 return false;
             });

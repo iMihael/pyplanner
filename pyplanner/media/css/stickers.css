@@ -310,3 +310,13 @@ body,html
 {
     color:#000;
 }
+
+.tooltip-inner
+{
+    max-width: none;
+    padding:5px;
+}
+.tooltip-arrow
+{
+    display: none;
+}

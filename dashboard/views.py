@@ -36,15 +36,19 @@ def get_bg(request, url):
         snap_service = snap_service.value
         snap_service = snap_service.replace('{url}', url)
         h = hashlib.sha1()
-        h.update(url)
+        h.update(url.encode('utf-8'))
         f_name = h.hexdigest()
         image_path = os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/img/" + f_name
         try:
             Bgimage.objects.get(pk=f_name)
         except Bgimage.DoesNotExist:
             image = Bgimage(name=f_name, url=url)
-            urllib.urlretrieve(snap_service, image_path)
-            image.save()
+            ## snap_service = urllib.quote(snap_service.encode('utf-8'))
+            try:
+                urllib.urlretrieve(snap_service, image_path)
+                image.save()
+            except BaseException:
+                return HttpResponse(0)
 
         handle = open(image_path, 'r+')
         content = handle.read()
