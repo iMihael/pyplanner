@@ -42,7 +42,7 @@ def logout_view(request):
 
 
 def logged_in(request):
-    return redirect('pyplanner.views.index_page')
+    return redirect('dashboard.views.index')
 
 
 def login_error(request):

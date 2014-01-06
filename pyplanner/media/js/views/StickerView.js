@@ -126,8 +126,10 @@ var StickerView = Backbone.View.extend({
         var matchArray;
 
         // Regular expression to find FTP, HTTP(S) and email URLs.
-        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
-
+        //var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+        var regexToken = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+        //var regexToken = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        //http://www.ebay.com/itm/HOT-Retro-Design-FLIP-WALLET-LEATHER-CASE-COVER-FITS-for-Nokia-Lumia-920-/121233716913?pt=US_Cell_Phone_PDA_Cases&hash=item1c3a17b6b1
         // Iterate through any URLs in the text.
         while( (matchArray = regexToken.exec( source )) !== null )
         {
@@ -139,11 +141,13 @@ var StickerView = Backbone.View.extend({
     },
     replaceUrls:function (text)
     {
-        var urls = this.findUrls(text);
-        for(var i=0;i<urls.length;i++)
-        {
-            text = text.replace(new RegExp(urls[i],'g'), '<a target="_blank" href="'+urls[i]+'">'+urls[i]+'</a>');
-        }
+//        var urls = this.findUrls(text);
+//        for(var i=0;i<urls.length;i++)
+//        {
+//            text = text.replace(new RegExp(urls[i],'g'), '<a target="_blank" href="'+urls[i]+'">'+urls[i]+'</a>');
+//        }
+        var regexToken = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+        return text.replace(regexToken,"<a target='_blank' href='$1'>$1</a>");
         return text;
     },
     bottomResize: function(e)
