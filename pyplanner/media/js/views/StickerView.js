@@ -202,6 +202,7 @@ var StickerView = Backbone.View.extend({
     },
     initialize: function(options) {
         this.font = this.model.font;
+        this.color = this.model.color;
     },
     render: function() {
 
@@ -209,7 +210,8 @@ var StickerView = Backbone.View.extend({
         this.context = {
             body: this.replaceUrls(this.nl2br(_.escape(this.model.get("body")))),
             sticker_id: this.model.get("sticker_id"),
-            font_color: this.font
+            font_color: this.font,
+            tbg_color: this.color
         };
 
         var compiled = _.template(this.template, this.context);
@@ -341,18 +343,6 @@ var StickerView = Backbone.View.extend({
                 return false;
             });
         });
-
-//        var urls = this.findUrls(this.nl2br(_.escape(this.model.get("body"))));
-//        if(urls.length == 1)
-//        {
-//            $.get("/a/dashboard/get_bg/" + urls[0], function(data){
-//                $(el).css("background", "url('/a/dashboard/get_bg/" + urls[0]+"')");
-//                $(el).css("border-color", "#777777");
-//                $(el).css("border-width", "1px");
-//                $(el).css("border-style", "solid");
-//
-//            });
-//        }
 
         return this;
     },
