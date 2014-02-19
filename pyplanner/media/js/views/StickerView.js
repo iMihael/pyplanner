@@ -288,12 +288,6 @@ var StickerView = Backbone.View.extend({
 
                 var sticker = stickCollection.where({sticker_id: sticker_id})[0];
                 sticker.set({position: curPosition});
-                //sticker.save();
-
-
-                //$(ui.draggable).css("top", 0);
-                //$(ui.draggable).css("left", 0);
-                //$(ui.draggable).css("z-index", $(el).attr("z-index"));
 
                 $("#sortable").isotope( 'reloadItems' );
                 $('#sortable').isotope({ sortBy : 'position' });
@@ -301,7 +295,6 @@ var StickerView = Backbone.View.extend({
         });
         $(this.el).draggable({
             start: function(e, ui){
-                //$(el).css("z-index", view.nextZindex());
                 $(el).css("-webkit-transform", "none");
             },
             stop: function(){

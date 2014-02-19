@@ -112,8 +112,11 @@ def colors(request):
     return HttpResponse(json.dumps(cols))
 
 
-def stickers(request):
-    sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True, archived__isnull=True)
+def stickers(request, page):
+    per_page = 25
+    offset = int(page) * per_page
+    sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True,
+                                    archived__isnull=True)[offset:offset + per_page]
     sticks = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position'))
     return HttpResponse(json.dumps(sticks))
 

@@ -1,5 +1,6 @@
 var cCollection;
 var stickCollection;
+var page = 0;
 
 function hideAreas(e)
 {

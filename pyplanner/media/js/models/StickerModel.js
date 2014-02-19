@@ -61,8 +61,9 @@ var StickerModel = Backbone.Model.extend({
 });
 
 var StickerCollection = Backbone.Collection.extend({
-
-    url: '/a/dashboard/stickers/',
+    url: function(){
+        return '/a/dashboard/stickers/' + page;
+    },
     model: StickerModel,
 
     initialize: function(models, options)
