@@ -141,11 +141,6 @@ var StickerView = Backbone.View.extend({
     },
     replaceUrls:function (text)
     {
-//        var urls = this.findUrls(text);
-//        for(var i=0;i<urls.length;i++)
-//        {
-//            text = text.replace(new RegExp(urls[i],'g'), '<a target="_blank" href="'+urls[i]+'">'+urls[i]+'</a>');
-//        }
         var regexToken = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
         return text.replace(regexToken,"<a class='u-tip' target='_blank' href='$1'>$1</a>");
         return text;
@@ -155,9 +150,8 @@ var StickerView = Backbone.View.extend({
         var margin = parseInt($(this.el).css("margin-bottom"));
         var currentHeight = this.model.get('height');
         var newHeight = currentHeight + this.minSize + margin;
-        //var zIndex = $(this.el).css("z-index");
         var el = this.el;
-        //$(this.el).css("z-index", this.nextZindex());
+
         this.model.set({height: newHeight});
         this.model.save();
 
@@ -165,7 +159,7 @@ var StickerView = Backbone.View.extend({
             height: newHeight + "px"
         }, 250, function(){
             $("#sortable").isotope('reLayout', function(){
-                //$(el).css("z-index", zIndex);
+
             });
         });
     },

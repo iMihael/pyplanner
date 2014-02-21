@@ -1,6 +1,7 @@
 var cCollection;
 var stickCollection;
 var page = 0;
+var scrollDetect = true;
 
 function hideAreas(e)
 {
@@ -13,7 +14,6 @@ function hideAreas(e)
         {
             if(sBody.html().trim() != area.val())
             {
-
                 var newText = area.val().trim();
                 var stick = parseInt(area.attr("stick"));
                 var sticker = stickCollection.where({sticker_id: stick})[0];
@@ -34,26 +34,12 @@ function hideAreas(e)
 function initTooltips()
 {
     $.each($('.u-tip'), function(key, value){
-        var href = $(value).attr('href');
-        var body = '<img class="u-loader" src="/media/images/loader.gif" />';
-        $(value).tooltip({
-            html: true,
-            placement: 'left',
-            title: body,
-            container: 'body',
-            delay: { show: 500, hide: 100 }
-        });
 
-        body = '<img src="/a/dashboard/get_bg/'+href+'" />';
-        $.get("/a/dashboard/get_bg/" + href, function(data){
-            if(data == "0")
-            {
-                $(value).tooltip('destroy');
-                return;
-            }
-            var show = $('.u-loader').length;
-
-            $(value).tooltip('destroy');
+        if(typeof($(value).attr("init")) == 'undefined')
+        {
+            $(value).attr("init", "init");
+            var href = $(value).attr('href');
+            var body = '<img class="u-loader" src="/media/images/loader.gif" />';
             $(value).tooltip({
                 html: true,
                 placement: 'left',
@@ -62,11 +48,30 @@ function initTooltips()
                 delay: { show: 500, hide: 100 }
             });
 
-            if(show)
-            {
-                $(value).tooltip('show')
-            }
-        });
+            body = '<img src="/a/dashboard/get_bg/'+href+'" />';
+            $.get("/a/dashboard/get_bg/" + href, function(data){
+                if(data == "0")
+                {
+                    $(value).tooltip('destroy');
+                    return;
+                }
+                var show = $('.u-loader').length;
+
+                $(value).tooltip('destroy');
+                $(value).tooltip({
+                    html: true,
+                    placement: 'left',
+                    title: body,
+                    container: 'body',
+                    delay: { show: 500, hide: 100 }
+                });
+
+                if(show)
+                {
+                    $(value).tooltip('show')
+                }
+            });
+        }
     });
 }
 
@@ -118,4 +123,30 @@ $(function(){
     });
 
     $("body").click(hideAreas);
+
+    $(window).scroll(function() {
+
+        if(parseInt($(window).scrollTop() + $(window).height()) == parseInt($(document).height()) && scrollDetect)  //user scrolled to bottom of the page?
+        {
+            scrollDetect = false;
+            page++;
+            stickCollection.fetch({
+                add: true,
+                remove: false,
+                merge: false,
+                success: function(collection){
+                    if(collection.length == 0)
+                    {
+                        scrollDetect = false;
+                        return;
+                    }
+
+                    $("#sortable").isotope( 'reloadItems' );
+                    $('#sortable').isotope({ sortBy : 'position' });
+                    $("body").css("height", $(document).height());
+                    scrollDetect = true;
+                }
+            });
+        }
+    });
 });

@@ -113,7 +113,7 @@ def colors(request):
 
 
 def stickers(request, page):
-    per_page = 25
+    per_page = 40
     offset = int(page) * per_page
     sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True,
                                     archived__isnull=True)[offset:offset + per_page]
