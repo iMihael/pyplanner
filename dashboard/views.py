@@ -30,6 +30,7 @@ def index(request):
 
 
 def snap(request, url):
+    url = urllib.unquote(url)
     try:
         snap_service = Config.objects.get(pk='snap_service')
     except Config.DoesNotExist:
