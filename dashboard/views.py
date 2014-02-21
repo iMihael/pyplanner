@@ -9,6 +9,8 @@ import json
 import urllib
 import hashlib
 import os.path
+from django.core.cache import cache
+import redis
 
 
 def index(request):
@@ -27,7 +29,7 @@ def index(request):
     return rtr('dashboard', view_params)
 
 
-def get_bg(request, url):
+def snap(request, url):
     try:
         snap_service = Config.objects.get(pk='snap_service')
     except Config.DoesNotExist:
@@ -35,7 +37,7 @@ def get_bg(request, url):
     else:
         snap_service = snap_service.value
         snap_service = snap_service.replace('{url}', url)
-        h = hashlib.sha1()
+        h = hashlib.md5()
         h.update(url.encode('utf-8'))
         f_name = h.hexdigest()
         image_path = os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/img/" + f_name
@@ -52,6 +54,8 @@ def get_bg(request, url):
 
         handle = open(image_path, 'r+')
         content = handle.read()
+        r = redis.StrictRedis()
+        r.setnx("snap:" + f_name, content)
         response = HttpResponse(content, content_type='image')
         return response
 

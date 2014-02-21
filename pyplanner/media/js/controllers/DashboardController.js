@@ -48,8 +48,10 @@ function initTooltips()
                 delay: { show: 500, hide: 100 }
             });
 
-            body = '<img src="/a/dashboard/get_bg/'+href+'" />';
-            $.get("/a/dashboard/get_bg/" + href, function(data){
+            var id = MD5(href);
+
+            body = '<img src="/a/dashboard/snap/'+ encodeURIComponent(href) +'/?id='+id+'" />';
+            $.get("/a/dashboard/snap/" + encodeURIComponent(href) + "/?id=" + id, function(data){
                 if(data == "0")
                 {
                     $(value).tooltip('destroy');
