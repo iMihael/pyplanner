@@ -1,0 +1,13 @@
+    ##############
+    # Production #
+    ##############
+
+    #include fastcgi_params;
+    #fastcgi_split_path_info ^()(.*)$;
+    #fastcgi_pass 127.0.0.1:8090;
+
+    #########
+    # Debug #
+    #########
+
+    proxy_pass http://127.0.0.1:8000;

@@ -2,8 +2,8 @@ from django.conf.urls import patterns, url
 from dashboard import views
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index),
-                       url(r'^color/$', views.color),
+                       url(r'^main/$', views.index),
+                       #url(r'^color/$', views.color),
                        url(r'^colors/$', views.colors),
                        url(r'^stickers/(\d+)$', views.stickers),
                        url(r'^sticker/$', views.sticker),

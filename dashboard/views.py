@@ -1,4 +1,4 @@
-from pyplanner.wrappers import rtr
+from pyplanner.wrappers import rtr, rts
 from dashboard.models import Sticker, Color, Bgimage
 from django.db.models import F, Max
 from django.http import HttpResponse, Http404
@@ -9,7 +9,6 @@ import json
 import urllib
 import hashlib
 import os.path
-from django.core.cache import cache
 import redis
 
 
@@ -26,6 +25,12 @@ def index(request):
         'username': request.user.username if request.user.is_authenticated() else False,
         'ad_code': ad_code,
     }
+
+    ### set cache for nginx
+    r = redis.StrictRedis()
+    r.setnx("page:" + request.session.session_key + ":" + request.get_full_path(), rts('dashboard', view_params))
+    ###
+
     return rtr('dashboard', view_params)
 
 
@@ -88,33 +93,40 @@ def archive(request, page):
     return rtr('archive', view_params)
 
 
-def color(request):
-    if 'color_id' in request.GET:
-        try:
-            col = Color.objects.get(pk=request.GET['color_id'])
-        except Color.DoesNotExist:
-            raise Http404
-        else:
-            return HttpResponse(json.dumps({'color_id': col.color_id, 'name': col.name, 'hex_value': col.hex_value}))
-
-    try:
-        body = json.loads(request.body)
-    except ValueError:
-        raise Http404
-    else:
-        if 'color_id' in body and body['color_id'] == 0:
-            c_frm = ColorForm(body)
-            if c_frm.is_valid():
-                inst = c_frm.save()
-                return HttpResponse(
-                    json.dumps({'color_id': inst.color_id, 'name': inst.name, 'hex_value': inst.hex_value}))
-    raise Http404
+#def color(request):
+#    if 'color_id' in request.GET:
+#        try:
+#            col = Color.objects.get(pk=request.GET['color_id'])
+#        except Color.DoesNotExist:
+#            raise Http404
+#        else:
+#            return HttpResponse(json.dumps({'color_id': col.color_id, 'name': col.name, 'hex_value': col.hex_value}))
+#
+#    try:
+#        body = json.loads(request.body)
+#    except ValueError:
+#        raise Http404
+#    else:
+#        if 'color_id' in body and body['color_id'] == 0:
+#            c_frm = ColorForm(body)
+#            if c_frm.is_valid():
+#                inst = c_frm.save()
+#                return HttpResponse(
+#                    json.dumps({'color_id': inst.color_id, 'name': inst.name, 'hex_value': inst.hex_value}))
+#    raise Http404
 
 
 def colors(request):
     cols = Color.objects.all()
     cols = list(cols.values('color_id', 'name', 'hex_value', 'font_color'))
-    return HttpResponse(json.dumps(cols))
+    json_dump = json.dumps(cols)
+
+    ### set cache for nginx
+    r = redis.StrictRedis()
+    r.setnx("page:" + request.get_full_path(), json_dump)
+    ###
+
+    return HttpResponse(json_dump)
 
 
 def stickers(request, page):
@@ -123,7 +135,12 @@ def stickers(request, page):
     sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True,
                                     archived__isnull=True)[offset:offset + per_page]
     sticks = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position'))
-    return HttpResponse(json.dumps(sticks))
+    json_dump = json.dumps(sticks)
+    ### set cache for nginx
+    r = redis.StrictRedis()
+    r.setnx("stickers:" + request.session.session_key + ":" + request.get_full_path(), json_dump)
+    ###
+    return HttpResponse(json_dump)
 
 
 def sticker_restore(request, sticker_id):
@@ -137,6 +154,7 @@ def sticker_restore(request, sticker_id):
         stick.archived = None
         stick.deleted = None
         stick.save()
+        request.session.cycle_key()
         return HttpResponse(1)
     return HttpResponse(0)
 
@@ -155,6 +173,7 @@ def sticker_archive(request, sticker_id):
                 stick.position = -1
                 stick.archived = datetime.now()
                 stick.save()
+            request.session.cycle_key()
             return HttpResponse(1)
     return HttpResponse(0)
 
@@ -173,7 +192,7 @@ def sticker_update(request, sticker_id):
                 stick.position = -1
                 stick.deleted = datetime.now()
                 stick.save()
-
+            request.session.cycle_key()
             return HttpResponse(1)
     return HttpResponse(0)
 
@@ -192,7 +211,7 @@ def sticker(request):
                 inst = s_frm.save(commit=False)
                 inst.owner = request.user
                 inst.save()
-
+                request.session.cycle_key()
                 return HttpResponse(json.dumps(
                     {'sticker_id': inst.sticker_id, 'body': inst.body, 'color_id': inst.color_id, 'width': inst.width,
                      'height': inst.height, 'position': inst.position}))
@@ -213,6 +232,7 @@ def sticker(request):
 
                 inst = s_frm.save(commit=False)
                 inst.save()
+                request.session.cycle_key()
 
                 return HttpResponse(json.dumps(
                     {'sticker_id': inst.sticker_id, 'body': inst.body, 'color_id': inst.color_id, 'width': inst.width,
