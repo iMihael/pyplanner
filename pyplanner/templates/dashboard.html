@@ -20,7 +20,7 @@
 {% block body %}
 
     <script id="colorTemplate" type="text/template">
-        <a href="#" cid="<%= color_id %>" style="background:#<%= hex_value %>" class="s_<%= name %>"></a>
+        <span class="glyphicon glyphicon-plus"></span>
     </script>
 
     <script id="stickerTemplate" type="text/template">
@@ -32,7 +32,9 @@
             <a href="#" class="st_button btn_ccolor" title="Change sticker color">
                 <span class="glyphicon glyphicon-tint ccolor"></span>
             </a>
-
+            <a href="#" title="Add image">
+                <span class="glyphicon glyphicon-picture"></span>
+            </a>
 {#            <a href="#" class="st_button" title="Notification">#}
 {#                <span class="glyphicon glyphicon-bell"></span>#}
 {#            </a>#}
@@ -70,9 +72,9 @@
     </div>
 
 
-	<div style="" class="colors">
-
-	</div>
+{#	<div style="" class="colors">#}
+{##}
+{#	</div>#}
 	<h2>Dashboard</h2>
 
 	<div style="padding-top:10px;">

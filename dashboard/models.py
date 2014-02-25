@@ -44,6 +44,13 @@ class Bgimage(models.Model):
     url = models.CharField(max_length=2048)
 
 
+class Pic(models.Model):
+    name = models.CharField(max_length=64)
+    uploaded = models.DateTimeField()
+    stick = models.ForeignKey(Sticker)
+    #raw_data = models.B
+
+
 #def create_user_stickers(sender, instance, created, **kwargs):
 #    if created:
 #        colors = Color.objects.all()
