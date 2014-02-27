@@ -2,14 +2,14 @@ from pyplanner.wrappers import rtr, rts
 from dashboard.models import Sticker, Color, Bgimage
 from django.db.models import F, Max
 from django.http import HttpResponse, Http404
-from dashboard.forms import ColorForm, StickerForm
+from dashboard.forms import StickerForm
 from pyplanner.models import Config
+from pyplanner.p_redis import PRedis
 from datetime import datetime
 import json
 import urllib
 import hashlib
 import os.path
-import redis
 
 
 def index(request):
@@ -26,10 +26,8 @@ def index(request):
         'ad_code': ad_code,
     }
 
-    ### set cache for nginx
-    r = redis.StrictRedis()
-    r.setnx("page:" + request.session.session_key + ":" + request.get_full_path(), rts('dashboard', view_params))
-    ###
+    PRedis.client.setnx("page:" + request.session.session_key + ":" + request.get_full_path(),
+                        rts('dashboard', view_params))
 
     return rtr('dashboard', view_params)
 
@@ -60,8 +58,7 @@ def snap(request, url):
 
         handle = open(image_path, 'r+')
         content = handle.read()
-        r = redis.StrictRedis()
-        r.setnx("snap:" + f_name, content)
+        PRedis.client.setnx("snap:" + f_name, content)
         response = HttpResponse(content, content_type='image')
         return response
 
@@ -122,8 +119,7 @@ def colors(request):
     json_dump = json.dumps(cols)
 
     ### set cache for nginx
-    r = redis.StrictRedis()
-    r.setnx("page:" + request.get_full_path(), json_dump)
+    PRedis.client.setnx("page:" + request.get_full_path(), json_dump)
     ###
 
     return HttpResponse(json_dump)
@@ -137,8 +133,7 @@ def stickers(request, page):
     sticks = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position'))
     json_dump = json.dumps(sticks)
     ### set cache for nginx
-    r = redis.StrictRedis()
-    r.setnx("stickers:" + request.session.session_key + ":" + request.get_full_path(), json_dump)
+    PRedis.client.setnx("stickers:" + request.session.session_key + ":" + request.get_full_path(), json_dump)
     ###
     return HttpResponse(json_dump)
 

@@ -315,17 +315,20 @@ var StickerView = Backbone.View.extend({
             $(".popover").css("z-index", nZindex());
             $(".popover").unbind();
             $(".popover").click(function(e){
-                var color_id = parseInt($(e.target).attr("cid"));
-                model.set({'color_id': color_id });
-                $(el).find('.btn_ccolor').popover('hide');
-                var color = cCollection.where({color_id: color_id});
-                if(color.length > 0)
+                var color_id = parseInt($(e.target.parentNode).attr("cid"));
+                if(!isNaN(color_id))
                 {
-                    color = color[0];
-                    var hex = color.get('hex_value');
-                    var font = color.get('font_color');
-                    $(el).css('background', '#'+hex);
-                    $(el).css('color', '#'+font);
+                    model.set({'color_id': color_id });
+                    $(el).find('.btn_ccolor').popover('hide');
+                    var color = cCollection.where({color_id: color_id});
+                    if(color.length > 0)
+                    {
+                        color = color[0];
+                        var hex = color.get('hex_value');
+                        var font = color.get('font_color');
+                        $(el).css('background', '#'+hex);
+                        $(el).css('color', '#'+font);
+                    }
                 }
                 return false;
             });

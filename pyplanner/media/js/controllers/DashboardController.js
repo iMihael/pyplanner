@@ -28,7 +28,7 @@ function hideAreas(e)
         }
     }
 
-
+    $(".btn_ccolor").popover('hide');
 }
 
 function initTooltips()
