@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 def index_page(request):
     view_params = {
+        'is_su': request.session.get("exit_users_pk", default=[]),
         'username': request.user.username if request.user.is_authenticated() else False,
         'is_staff': request.user.is_staff,
     }

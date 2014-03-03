@@ -21,6 +21,7 @@ def index(request):
         ad_code = ad_code.value
 
     view_params = {
+        'is_su': request.session.get("exit_users_pk", default=[]),
         'username': request.user.username if request.user.is_authenticated() else False,
         'is_staff': request.user.is_staff,
         'ad_code': ad_code,
@@ -89,6 +90,7 @@ def archive(request, page):
         back_p = page-1
 
     view_params = {
+        'is_su': request.session.get("exit_users_pk", default=[]),
         'username': request.user.username if request.user.is_authenticated() else False,
         'stickers': sticks,
         'is_staff': request.user.is_staff,

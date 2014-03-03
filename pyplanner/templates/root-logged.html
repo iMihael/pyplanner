@@ -54,10 +54,17 @@
 							<li class="dropdown {% block nav-profile %}{% endblock %}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									{% if is_staff %}
+                                    {% if is_staff %}
+                                        {% if is_su %}
+                                            <li>
+                                                <a href="{% url 'su_exit' %}">SU Exit</a>
+                                            </li>
+                                        {% endif %}
+
 									<li>
 										<a href="{% url 'admin:index' %}">Admin</a>
 									</li>
+                                    <li class="divider"></li>
                                     {% endif %}
                                     <li>
                                         <a href="{% url 'pyplanner.views.logout_view' %}">Logout</a>
