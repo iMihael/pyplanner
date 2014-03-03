@@ -3,6 +3,7 @@ var stickCollection;
 var page = 0;
 var scrollDetect = true;
 var mouseY;
+var pageY;
 
 function hideAreas(e)
 {
@@ -71,11 +72,9 @@ function initTooltips()
                     delay: { show: 500, hide: 100 }
                 });
                 $(value).on('shown.bs.tooltip', function () {
-                    if( parseInt( $(window).height()) - 300 < parseInt(mouseY) )
+                    if( parseInt( $(window).height()) - 300 < mouseY )
                     {
-                        var top = parseInt($(".tooltip").css("top"));
-                        top -= 330;
-                        $(".tooltip").css("top", top + "px");
+                        $(".tooltip").css("top", (pageY - 320) + "px");
                     }
                 });
 
@@ -165,6 +164,7 @@ $(function(){
     });
 
     $( document ).on( "mousemove", function( event ) {
-      mouseY =  event.clientY ;
+        mouseY =  parseInt(event.clientY);
+        pageY = parseInt(event.pageY);
     });
 });
