@@ -28,13 +28,13 @@ urlpatterns = patterns('',
                        url(r'^logged-in/$', views.logged_in),
                        url(r'^login-error/$', views.login_error),
                        url(r'^contacts/$', views.contacts),
-
+                       url(r"^su/", include("django_su.urls")),
                        url(r'', include('social_auth.urls')),
                        url(r'^admin/', include(admin.site.urls)),
 
                        url(r'^a/', include(logged_paterns)),
 
-)
+                       )
 
 if settings.DEBUG:
     urlpatterns += (url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_PATH}),)
