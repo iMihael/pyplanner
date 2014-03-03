@@ -1,4 +1,4 @@
-from pyplanner.wrappers import rtr, rts, plain
+from pyplanner.wrappers import rtr, plain
 from dashboard.models import Sticker, Color, Bgimage
 from django.db.models import F, Max
 from django.http import Http404
@@ -21,8 +21,8 @@ def index(request):
         ad_code = ad_code.value
 
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
+        'is_staff': request.user.is_staff,
         'ad_code': ad_code,
     }
 
@@ -89,9 +89,9 @@ def archive(request, page):
         back_p = page-1
 
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
         'stickers': sticks,
+        'is_staff': request.user.is_staff,
         'back': back_p,
         'next': next_p,
         'page': page,

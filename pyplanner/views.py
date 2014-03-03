@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 def index_page(request):
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
+        'is_staff': request.user.is_staff,
     }
     return rtr('index', view_params)
 
@@ -51,7 +51,6 @@ def login_error(request):
 
 def blog(request):
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
     }
     return rtr('blog', view_params)
@@ -59,7 +58,6 @@ def blog(request):
 
 def about(request):
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
     }
     return rtr('about', view_params)
@@ -67,7 +65,6 @@ def about(request):
 
 def contacts(request):
     view_params = {
-        'user_logged': request.user.is_authenticated(),
         'username': request.user.username if request.user.is_authenticated() else False,
     }
     return rtr('contacts', view_params)

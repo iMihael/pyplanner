@@ -38,7 +38,7 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-						{% if user_logged %}
+						{% if username %}
 							<li style="border-right: 1px solid #ccc;">
 								<a href="{% url 'dashboard.views.index' %}">
 									<span style="text-decoration:underline;">To Dashboard</span>
@@ -49,9 +49,11 @@
 
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-{#									<li>#}
-{#										<a href="#">Manage profile</a>#}
-{#									</li>#}
+                                    {% if is_staff %}
+									<li>
+										<a href="{% url 'admin:index' %}">Admin</a>
+									</li>
+                                    {% endif %}
                                     <li>
                                         <a href="{% url 'pyplanner.views.logout_view' %}">Logout</a>
                                     </li>

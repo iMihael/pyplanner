@@ -50,13 +50,15 @@
                     <ul class="nav navbar-nav navbar-right">
 
 
-						{% if user_logged %}
+						{% if username %}
 							<li class="dropdown {% block nav-profile %}{% endblock %}">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-{#									<li>#}
-{#										<a href="#">Manage profile</a>#}
-{#									</li>#}
+									{% if is_staff %}
+									<li>
+										<a href="{% url 'admin:index' %}">Admin</a>
+									</li>
+                                    {% endif %}
                                     <li>
                                         <a href="{% url 'pyplanner.views.logout_view' %}">Logout</a>
                                     </li>
