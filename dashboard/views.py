@@ -1,7 +1,7 @@
-from pyplanner.wrappers import rtr, rts
+from pyplanner.wrappers import rtr, rts, plain
 from dashboard.models import Sticker, Color, Bgimage
 from django.db.models import F, Max
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from dashboard.forms import StickerForm
 from pyplanner.models import Config
 from pyplanner.p_redis import PRedis
@@ -26,8 +26,10 @@ def index(request):
         'ad_code': ad_code,
     }
 
-    PRedis.client.setnx("page:" + request.session.session_key + ":" + request.get_full_path(),
-                        rts('dashboard', view_params))
+    ### TODO: Fix this, main page must cache too!
+    #PRedis.cache_init(request.user.id)
+    #PRedis.client.setnx("page:" + PRedis.cache_cookie + ":" + request.get_full_path(),
+    #                    rts('dashboard', view_params))
 
     return rtr('dashboard', view_params)
 
@@ -37,7 +39,7 @@ def snap(request, url):
     try:
         snap_service = Config.objects.get(pk='snap_service')
     except Config.DoesNotExist:
-        return HttpResponse('Snap service is not set')
+        return plain('Snap service is not set')
     else:
         snap_service = snap_service.value
         snap_service = snap_service.replace('{url}', url)
@@ -54,12 +56,12 @@ def snap(request, url):
                 urllib.urlretrieve(snap_service, image_path)
                 image.save()
             except BaseException:
-                return HttpResponse(0)
+                return plain(0)
 
         handle = open(image_path, 'r+')
         content = handle.read()
         PRedis.client.setnx("snap:" + f_name, content)
-        response = HttpResponse(content, content_type='image')
+        response = plain(content, content_type='image')
         return response
 
 
@@ -122,7 +124,7 @@ def colors(request):
     PRedis.client.setnx("page:" + request.get_full_path(), json_dump)
     ###
 
-    return HttpResponse(json_dump)
+    return plain(json_dump)
 
 
 def stickers(request, page):
@@ -133,9 +135,10 @@ def stickers(request, page):
     sticks = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position'))
     json_dump = json.dumps(sticks)
     ### set cache for nginx
-    PRedis.client.setnx("stickers:" + request.session.session_key + ":" + request.get_full_path(), json_dump)
+    PRedis.cache_init(request.user.id)
+    PRedis.client.setnx("stickers:" + PRedis.cache_cookie + ":" + request.get_full_path(), json_dump)
     ###
-    return HttpResponse(json_dump)
+    return plain(json_dump)
 
 
 def sticker_restore(request, sticker_id):
@@ -149,9 +152,9 @@ def sticker_restore(request, sticker_id):
         stick.archived = None
         stick.deleted = None
         stick.save()
-        request.session.cycle_key()
-        return HttpResponse(1)
-    return HttpResponse(0)
+        PRedis.clear_user_cache(request.user.id)
+        return plain(1)
+    return plain(0)
 
 
 def sticker_archive(request, sticker_id):
@@ -168,9 +171,9 @@ def sticker_archive(request, sticker_id):
                 stick.position = -1
                 stick.archived = datetime.now()
                 stick.save()
-            request.session.cycle_key()
-            return HttpResponse(1)
-    return HttpResponse(0)
+            PRedis.clear_user_cache(request.user.id)
+            return plain(1)
+    return plain(0)
 
 
 def sticker_update(request, sticker_id):
@@ -187,9 +190,9 @@ def sticker_update(request, sticker_id):
                 stick.position = -1
                 stick.deleted = datetime.now()
                 stick.save()
-            request.session.cycle_key()
-            return HttpResponse(1)
-    return HttpResponse(0)
+            PRedis.clear_user_cache(request.user.id)
+            return plain(1)
+    return plain(0)
 
 
 def sticker(request):
@@ -206,8 +209,8 @@ def sticker(request):
                 inst = s_frm.save(commit=False)
                 inst.owner = request.user
                 inst.save()
-                request.session.cycle_key()
-                return HttpResponse(json.dumps(
+                PRedis.clear_user_cache(request.user.id)
+                return plain(json.dumps(
                     {'sticker_id': inst.sticker_id, 'body': inst.body, 'color_id': inst.color_id, 'width': inst.width,
                      'height': inst.height, 'position': inst.position}))
         else:
@@ -227,10 +230,9 @@ def sticker(request):
 
                 inst = s_frm.save(commit=False)
                 inst.save()
-                request.session.cycle_key()
+                PRedis.clear_user_cache(request.user.id)
 
-                return HttpResponse(json.dumps(
+                return plain(json.dumps(
                     {'sticker_id': inst.sticker_id, 'body': inst.body, 'color_id': inst.color_id, 'width': inst.width,
                      'height': inst.height, 'position': inst.position}))
-
     raise Http404
