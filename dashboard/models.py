@@ -3,6 +3,7 @@ __author__ = 'mihael'
 from django.db import models
 #from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+import base64
 #from random import randint
 
 
@@ -42,6 +43,15 @@ class Sticker(models.Model):
 class Bgimage(models.Model):
     name = models.CharField(max_length=64, primary_key=True)
     url = models.CharField(max_length=2048)
+    _raw = models.TextField(db_column='raw', blank=True)
+
+    def set_data(self, raw):
+        self._raw = base64.encodestring(raw)
+
+    def get_data(self):
+        return base64.decodestring(self._raw)
+
+    raw = property(get_data, set_data)
 
 
 class Pic(models.Model):

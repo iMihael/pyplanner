@@ -48,18 +48,25 @@ def snap(request, url):
         f_name = h.hexdigest()
         image_path = os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/img/" + f_name
         try:
-            Bgimage.objects.get(pk=f_name)
+            image = Bgimage.objects.get(pk=f_name)
         except Bgimage.DoesNotExist:
             image = Bgimage(name=f_name, url=url)
-            ## snap_service = urllib.quote(snap_service.encode('utf-8'))
             try:
                 urllib.urlretrieve(snap_service, image_path)
-                image.save()
             except BaseException:
                 return plain(0)
 
-        handle = open(image_path, 'r+')
-        content = handle.read()
+        try:
+            handle = open(image_path, 'r+')
+            content = handle.read()
+            image.raw = content
+            image.save()
+        except IOError:
+            if image.raw:
+                content = image.raw
+            else:
+                return plain(0)
+
         PRedis.client.setnx("snap:" + f_name, content)
         response = plain(content, content_type='image')
         return response
