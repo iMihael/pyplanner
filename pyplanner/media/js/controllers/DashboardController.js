@@ -68,7 +68,7 @@ function initTooltips()
                     placement: 'auto bottom',
                     title: body,
                     container: 'body',
-                    delay: { show: 500, hide: 10000 }
+                    delay: { show: 500, hide: 100 }
                 });
                 $(value).on('shown.bs.tooltip', function () {
                     if( parseInt( $(window).height()) - 300 < parseInt(mouseY) )
