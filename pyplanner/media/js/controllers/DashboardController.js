@@ -2,6 +2,7 @@ var cCollection;
 var stickCollection;
 var page = 0;
 var scrollDetect = true;
+var mouseY;
 
 function hideAreas(e)
 {
@@ -31,6 +32,8 @@ function hideAreas(e)
     $(".btn_ccolor").popover('hide');
 }
 
+
+
 function initTooltips()
 {
     $.each($('.u-tip'), function(key, value){
@@ -42,7 +45,7 @@ function initTooltips()
             var body = '<img class="u-loader" src="/media/images/loader.gif" />';
             $(value).tooltip({
                 html: true,
-                placement: 'auto top',
+                placement: 'auto bottom',
                 title: body,
                 container: 'body',
                 delay: { show: 500, hide: 100 }
@@ -62,10 +65,18 @@ function initTooltips()
                 $(value).tooltip('destroy');
                 $(value).tooltip({
                     html: true,
-                    placement: 'left',
+                    placement: 'auto bottom',
                     title: body,
                     container: 'body',
-                    delay: { show: 500, hide: 100 }
+                    delay: { show: 500, hide: 10000 }
+                });
+                $(value).on('shown.bs.tooltip', function () {
+                    if( parseInt( $(window).height()) - 300 < parseInt(mouseY) )
+                    {
+                        var top = parseInt($(".tooltip").css("top"));
+                        top -= 330;
+                        $(".tooltip").css("top", top + "px");
+                    }
                 });
 
                 if(show)
@@ -147,8 +158,13 @@ $(function(){
                     $('#sortable').isotope({ sortBy : 'position' });
                     $("body").css("height", $(document).height());
                     scrollDetect = true;
+                    initTooltips();
                 }
             });
         }
+    });
+
+    $( document ).on( "mousemove", function( event ) {
+      mouseY =  event.clientY ;
     });
 });
