@@ -315,7 +315,7 @@ var StickerView = Backbone.View.extend({
             $(".popover").css("z-index", nZindex());
             $(".popover").unbind();
             $(".popover").click(function(e){
-                var color_id = parseInt($(e.target.parentNode).attr("cid"));
+                var color_id = parseInt($(e.target).attr("cid"));
                 if(!isNaN(color_id))
                 {
                     model.set({'color_id': color_id });

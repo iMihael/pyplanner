@@ -42,7 +42,7 @@ function initTooltips()
             var body = '<img class="u-loader" src="/media/images/loader.gif" />';
             $(value).tooltip({
                 html: true,
-                placement: 'left',
+                placement: 'auto top',
                 title: body,
                 container: 'body',
                 delay: { show: 500, hide: 100 }

@@ -244,6 +244,8 @@ body,html
     /*float:right;*/
 
     margin-bottom:10px;
+    width:15px;
+    height:15px;
 }
 .add-st-btn a
 {
@@ -339,3 +341,14 @@ body,html
     padding-left:3px;
     opacity: 0.6;
 }
+
+.add-st-btn > .glyphicon
+{
+    visibility: hidden;
+    /*font-size: 0;*/
+}
+/*.popover-content > add-st-btn*/
+/*{*/
+    /*width:20px;*/
+    /*height:20px;*/
+/*}*/
