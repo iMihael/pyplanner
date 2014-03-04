@@ -46,7 +46,13 @@ INSTALLED_APPS = (
     'social_auth',
     'dashboard',
     'pyplanner',
+    'sorl.thumbnail',
 )
+
+FILE_UPLOAD_TEMP_DIR = '/var/www/pyplanner/tmp/'
+FILE_UPLOAD_MAX_MEMORY_SIZE = 0
+FILE_UPLOAD_PERMISSIONS = 0644
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.vk.VKOAuth2Backend',

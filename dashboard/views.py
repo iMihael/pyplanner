@@ -1,11 +1,12 @@
 from pyplanner.wrappers import rtr, plain
-from dashboard.models import Sticker, Color, Bgimage
+from dashboard.models import Sticker, Color, Bgimage, ImageModel
 from django.db.models import F, Max
 from django.http import Http404
-from dashboard.forms import StickerForm
+from dashboard.forms import StickerForm, UploadImageForm
 from pyplanner.models import Config
 from pyplanner.p_redis import PRedis
 from datetime import datetime
+from sorl.thumbnail import get_thumbnail
 import json
 import urllib
 import hashlib
@@ -122,6 +123,16 @@ def archive(request, page):
 #                return HttpResponse(
 #                    json.dumps({'color_id': inst.color_id, 'name': inst.name, 'hex_value': inst.hex_value}))
 #    raise Http404
+
+
+def upload_image(request):
+    form = UploadImageForm(request.POST, request.FILES)
+    if form.is_valid():
+        image = form.cleaned_data['image']
+        image = get_thumbnail(image.file.name, '100')
+    else:
+        raise Http404
+    return plain(1)
 
 
 def colors(request):

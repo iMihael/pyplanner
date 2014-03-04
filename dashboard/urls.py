@@ -12,4 +12,5 @@ urlpatterns = patterns('',
                        url(r'^archive/(?P<page>\d+)$', views.archive),
                        url(r'^restore/(?P<sticker_id>\d+)$', views.sticker_restore),
                        url(r'^snap/(?P<url>.*)/$', views.snap),
+                       url(r'^upload_image/$', views.upload_image),
 )

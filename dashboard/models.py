@@ -54,11 +54,23 @@ class Bgimage(models.Model):
     raw = property(get_data, set_data)
 
 
+class ImageModel(models.Model):
+    image = models.ImageField(upload_to='tmp')
+
+
 class Pic(models.Model):
     name = models.CharField(max_length=64)
     uploaded = models.DateTimeField()
     stick = models.ForeignKey(Sticker)
-    #raw_data = models.B
+    _raw = models.TextField(db_column='raw', blank=True)
+
+    def set_data(self, raw):
+        self._raw = base64.encodestring(raw)
+
+    def get_data(self):
+        return base64.decodestring(self._raw)
+
+    raw = property(get_data, set_data)
 
 
 #def create_user_stickers(sender, instance, created, **kwargs):

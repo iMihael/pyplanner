@@ -32,7 +32,7 @@
             <a href="#" class="st_button btn_ccolor" title="Change sticker color">
                 <span class="glyphicon glyphicon-tint ccolor"></span>
             </a>
-            <a href="#" title="Add image">
+            <a href="#" class="add-image" title="Add image">
                 <span class="glyphicon glyphicon-picture"></span>
             </a>
 {#            <a href="#" class="st_button" title="Notification">#}
@@ -76,6 +76,14 @@
 {##}
 {#	</div>#}
 	<h2>Dashboard</h2>
+
+    <div style="display: none;">
+        <iframe id="upload-iframe" name="upload-iframe"></iframe>
+        <form enctype="multipart/form-data" name="u-form" id="upload-form" target="upload-iframe" method="POST" action="{% url 'dashboard.views.upload_image' %}">
+            <input type="hidden" name="sticker" id="sticker-input" />
+            <input type="file" accept="image/*" id="upload-input" name="image" />
+        </form>
+    </div>
 
 	<div style="padding-top:10px;">
 		<div id="sortable">

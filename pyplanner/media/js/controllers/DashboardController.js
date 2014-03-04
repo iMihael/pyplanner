@@ -167,4 +167,8 @@ $(function(){
         mouseY =  parseInt(event.clientY);
         pageY = parseInt(event.pageY);
     });
+
+    $("#upload-input").change(function(){
+        $("#upload-form").submit();
+    });
 });

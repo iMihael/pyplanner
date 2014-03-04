@@ -31,7 +31,8 @@ var StickerView = Backbone.View.extend({
         'click .left-bar': 'leftResize',
         'click .right-bar': 'rightResize',
         'click .bottom-bar': 'bottomResize',
-        'click .rb-bar': 'rightBottomResize'
+        'click .rb-bar': 'rightBottomResize',
+        'click .add-image': 'addImage'
         /*'mouseover .header': 'enableSort',
         'mouseout .header': 'disableSort'*/
     },
@@ -39,6 +40,13 @@ var StickerView = Backbone.View.extend({
     {
         e.currentTarget = e.currentTarget.parentNode.parentNode;
         this.showEditArea(e);
+        return false;
+    },
+    addImage: function(e)
+    {
+        var sid = this.model.get('sticker_id');
+        $("#sticker-input").val(sid);
+        $("#upload-input").trigger(e);
         return false;
     },
     rightResize: function(e)

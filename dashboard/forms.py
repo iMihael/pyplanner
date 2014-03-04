@@ -26,3 +26,8 @@ class StickerForm(ModelForm):
     class Meta:
         model = Sticker
         fields = ['sticker_id', 'body', 'width', 'height', 'position']
+
+
+class UploadImageForm(forms.Form):
+    sticker = forms.IntegerField(required=True)
+    image = forms.ImageField(required=True)
