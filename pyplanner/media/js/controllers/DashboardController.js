@@ -4,6 +4,8 @@ var page = 0;
 var scrollDetect = true;
 var mouseY;
 var pageY;
+var mouseX;
+var pageX;
 
 function hideAreas(e)
 {
@@ -74,7 +76,11 @@ function initTooltips()
                 $(value).on('shown.bs.tooltip', function () {
                     if( parseInt( $(window).height()) - 300 < mouseY )
                     {
-                        $(".tooltip").css("top", (pageY - 320) + "px");
+                        $(".tooltip").css("top", (pageY - 330) + "px");
+                    }
+                    if(parseInt($(window).width()) - 350 < mouseX )
+                    {
+                        $(".tooltip").css("left", (pageX - 350) + "px");
                     }
                 });
 
@@ -166,6 +172,8 @@ $(function(){
     $( document ).on( "mousemove", function( event ) {
         mouseY =  parseInt(event.clientY);
         pageY = parseInt(event.pageY);
+        pageX = parseInt(event.pageX);
+        mouseX = parseInt(event.clientX)
     });
 
     $("#upload-input").change(function(){
