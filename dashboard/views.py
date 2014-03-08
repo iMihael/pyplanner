@@ -130,6 +130,8 @@ def upload_image(request):
         f = open(os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/pic/" + pic_name, 'w')
         f.write(content)
         f.close()
+
+        PRedis.clear_user_cache(request.user.id)
     else:
         raise Http404
     return plain('/media/pic/' + pic_name)
