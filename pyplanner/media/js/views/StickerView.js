@@ -237,7 +237,7 @@ var StickerView = Backbone.View.extend({
         else
         {
             $(this.container).append(this.el);
-            if(this.model.get("pic") != '')
+            if(typeof(this.model.get("pic")) != 'undefined' && this.model.get("pic") != '' && this.model.get("pic") != null)
             {
                 $(this.el).css("background-image", "url("+this.model.get("pic")+")");
                 $(this.el).css("background-size", "cover");
