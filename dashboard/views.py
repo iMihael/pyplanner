@@ -1,12 +1,13 @@
 from pyplanner.wrappers import rtr, plain
-from dashboard.models import Sticker, Color, Bgimage, ImageModel
+from dashboard.models import Sticker, Color, Bgimage, Pic
 from django.db.models import F, Max
 from django.http import Http404
 from dashboard.forms import StickerForm, UploadImageForm
 from pyplanner.models import Config
 from pyplanner.p_redis import PRedis
 from datetime import datetime
-from sorl.thumbnail import get_thumbnail
+from PIL import Image, ImageOps
+import StringIO
 import json
 import urllib
 import hashlib
@@ -102,37 +103,36 @@ def archive(request, page):
     return rtr('archive', view_params)
 
 
-#def color(request):
-#    if 'color_id' in request.GET:
-#        try:
-#            col = Color.objects.get(pk=request.GET['color_id'])
-#        except Color.DoesNotExist:
-#            raise Http404
-#        else:
-#            return HttpResponse(json.dumps({'color_id': col.color_id, 'name': col.name, 'hex_value': col.hex_value}))
-#
-#    try:
-#        body = json.loads(request.body)
-#    except ValueError:
-#        raise Http404
-#    else:
-#        if 'color_id' in body and body['color_id'] == 0:
-#            c_frm = ColorForm(body)
-#            if c_frm.is_valid():
-#                inst = c_frm.save()
-#                return HttpResponse(
-#                    json.dumps({'color_id': inst.color_id, 'name': inst.name, 'hex_value': inst.hex_value}))
-#    raise Http404
-
-
 def upload_image(request):
     form = UploadImageForm(request.POST, request.FILES)
     if form.is_valid():
+        try:
+            pic_sticker = Sticker.objects.get(pk=form.cleaned_data['sticker'])
+        except Sticker.DoesNotExist:
+            raise Http404
+
+        Pic.objects.filter(stick=pic_sticker).delete()
+
         image = form.cleaned_data['image']
-        image = get_thumbnail(image.file.name, '100')
+        thumb = Image.open(image.file.name)
+        thumb = ImageOps.fit(thumb, (305, 305), Image.ANTIALIAS, centering=(0.5, 0))
+        output = StringIO.StringIO()
+        thumb.save(output, 'JPEG', quality=75)
+        content = output.getvalue()
+
+        h = hashlib.md5()
+        h.update(image.file.name + str(datetime.now()))
+        pic_name = h.hexdigest() + '.jpg'
+
+        pic = Pic(stick=pic_sticker, name=pic_name, raw=content)
+        pic.save()
+
+        f = open('pyplanner/media/pic/' + pic_name, 'w')
+        f.write(content)
+        f.close()
     else:
         raise Http404
-    return plain(1)
+    return plain('/media/pic/' + pic_name)
 
 
 def colors(request):

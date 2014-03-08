@@ -171,4 +171,10 @@ $(function(){
     $("#upload-input").change(function(){
         $("#upload-form").submit();
     });
+
+    $("#upload-iframe").load(function(){
+        var url = $("#upload-iframe").contents().find("body").html().trim();
+        $("#s" + $("#upload-iframe").attr("sid")).css("background-image", "url("+url+")");
+        $("#s" + $("#upload-iframe").attr("sid")).css("background-size", "cover");
+    });
 });

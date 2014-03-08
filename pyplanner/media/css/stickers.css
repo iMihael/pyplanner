@@ -162,6 +162,7 @@
     display: inline-block;
     overflow: hidden;
     border-radius: 3px;
+    background-size: cover;
 }
 body,html
 {

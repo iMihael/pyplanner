@@ -1,10 +1,8 @@
 __author__ = 'mihael'
 
 from django.db import models
-#from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 import base64
-#from random import randint
 
 
 class Color(models.Model):
@@ -54,14 +52,10 @@ class Bgimage(models.Model):
     raw = property(get_data, set_data)
 
 
-class ImageModel(models.Model):
-    image = models.ImageField(upload_to='tmp')
-
-
 class Pic(models.Model):
     name = models.CharField(max_length=64)
-    uploaded = models.DateTimeField()
-    stick = models.ForeignKey(Sticker)
+    uploaded = models.DateTimeField(auto_now=True)
+    stick = models.ForeignKey(Sticker, related_name='pics')
     _raw = models.TextField(db_column='raw', blank=True)
 
     def set_data(self, raw):

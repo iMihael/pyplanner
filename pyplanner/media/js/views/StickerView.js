@@ -45,6 +45,7 @@ var StickerView = Backbone.View.extend({
     addImage: function(e)
     {
         var sid = this.model.get('sticker_id');
+        $("#upload-iframe").attr("sid", sid);
         $("#sticker-input").val(sid);
         $("#upload-input").trigger(e);
         return false;
