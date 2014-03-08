@@ -9,7 +9,8 @@ var StickerModel = Backbone.Model.extend({
         color_id: 0,
         width: 150,
         height: 150,
-        position: 0
+        position: 0,
+        pic: ''
     },
     color: 'ffffff',
     font: '000000',

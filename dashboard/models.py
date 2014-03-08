@@ -55,7 +55,8 @@ class Bgimage(models.Model):
 class Pic(models.Model):
     name = models.CharField(max_length=64)
     uploaded = models.DateTimeField(auto_now=True)
-    stick = models.ForeignKey(Sticker, related_name='pics')
+    #stick = models.ForeignKey(Sticker, related_name='pics')
+    stick = models.OneToOneField(Sticker, related_name='pic')
     _raw = models.TextField(db_column='raw', blank=True)
 
     def set_data(self, raw):

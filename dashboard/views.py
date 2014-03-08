@@ -150,10 +150,14 @@ def colors(request):
 def stickers(request, page):
     per_page = 40
     offset = int(page) * per_page
-    sticks = Sticker.objects.filter(owner=request.user, deleted__isnull=True,
-                                    archived__isnull=True)[offset:offset + per_page]
-    sticks = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position'))
-    json_dump = json.dumps(sticks)
+    sticks = Sticker.objects.prefetch_related('pic').filter(owner=request.user, deleted__isnull=True,
+                                                            archived__isnull=True)[offset:offset + per_page]
+    stick_list = list(sticks.values('sticker_id', 'body', 'color_id', 'width', 'height', 'position', 'pic'))
+    for i in range(0, len(stick_list)):
+        if stick_list[i]['pic']:
+            stick_list[i]['pic'] = '/media/pic/' + sticks[i].pic.name
+
+    json_dump = json.dumps(stick_list)
     ### set cache for nginx
     PRedis.cache_init(request.user.id)
     PRedis.client.setnx("stickers:" + PRedis.cache_cookie + ":" + request.get_full_path(), json_dump)
@@ -222,7 +226,7 @@ def sticker(request):
         raise Http404
     else:
         try:
-            stick = Sticker.objects.get(pk=body['sticker_id'], owner=request.user)
+            stick = Sticker.objects.prefetch_related('pic').get(pk=body['sticker_id'], owner=request.user)
         except Sticker.DoesNotExist:
             s_frm = StickerForm(body)
             if s_frm.is_valid():
@@ -235,6 +239,7 @@ def sticker(request):
                      'height': inst.height, 'position': inst.position}))
         else:
             old_position = stick.position
+            old_color = stick.color
             s_frm = StickerForm(body, instance=stick)
 
             if s_frm.is_valid():
@@ -247,6 +252,9 @@ def sticker(request):
                         Sticker.objects.filter(
                             owner=request.user, position__lte=stick.position, position__gte=old_position)\
                             .exclude(sticker_id=stick.sticker_id).update(position=F('position') - 1)
+
+                if old_color != stick.color and stick.pic:
+                    stick.pic.delete()
 
                 inst = s_frm.save(commit=False)
                 inst.save()

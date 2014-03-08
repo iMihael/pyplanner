@@ -237,6 +237,11 @@ var StickerView = Backbone.View.extend({
         else
         {
             $(this.container).append(this.el);
+            if(this.model.get("pic") != '')
+            {
+                $(this.el).css("background-image", "url("+this.model.get("pic")+")");
+                $(this.el).css("background-size", "cover");
+            }
         }
 
         var el = this.el;
