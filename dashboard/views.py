@@ -127,7 +127,7 @@ def upload_image(request):
         pic = Pic(stick=pic_sticker, name=pic_name, raw=content)
         pic.save()
 
-        f = open('pyplanner/media/pic/' + pic_name, 'w')
+        f = open(os.path.dirname(os.path.realpath(__file__)) + "/../pyplanner/media/pic/" + pic_name, 'w')
         f.write(content)
         f.close()
     else:
