@@ -252,9 +252,11 @@ def sticker(request):
                         Sticker.objects.filter(
                             owner=request.user, position__lte=stick.position, position__gte=old_position)\
                             .exclude(sticker_id=stick.sticker_id).update(position=F('position') - 1)
-
-                if old_color != stick.color and stick.pic:
-                    stick.pic.delete()
+                try:
+                    if old_color != stick.color and stick.pic:
+                        stick.pic.delete()
+                except Pic.DoesNotExist:
+                    pass
 
                 inst = s_frm.save(commit=False)
                 inst.save()
