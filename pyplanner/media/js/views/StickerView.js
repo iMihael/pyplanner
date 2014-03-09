@@ -341,6 +341,7 @@ var StickerView = Backbone.View.extend({
                         var hex = color.get('hex_value');
                         var font = color.get('font_color');
                         $(el).css('background', '#'+hex);
+                        $(el).find('textarea').css('background', '#'+hex);
                         $(el).css('color', '#'+font);
                     }
                 }
