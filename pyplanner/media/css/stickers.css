@@ -6,7 +6,7 @@
 }
 .header a
 {
-    color:#fff;
+    color:inherit;
 }
 .s_green
 {
@@ -132,7 +132,7 @@
     /*float: right;*/
     text-align: right;
 
-    opacity: .1;
+    opacity: .4;
     transition: opacity .5s ease-out;
     -moz-transition: opacity .5s ease-out;
     -webkit-transition: opacity .5s ease-out;
