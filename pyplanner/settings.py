@@ -33,6 +33,8 @@ TEMPLATE_DIRS = (
     os.path.dirname(__file__) + '/templates',
 )
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 # Application definition
 
 INSTALLED_APPS = (
