@@ -46,13 +46,11 @@ INSTALLED_APPS = (
     'social_auth',
     'dashboard',
     'pyplanner',
-    'sorl.thumbnail',
 )
 
 FILE_UPLOAD_TEMP_DIR = '/var/www/pyplanner/tmp/'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 0
 FILE_UPLOAD_PERMISSIONS = 0644
-THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.vk.VKOAuth2Backend',
@@ -64,20 +62,7 @@ AUTHENTICATION_BACKENDS = (
     'django_su.backends.SuBackend',
 )
 
-FACEBOOK_APP_ID = '244919165572368'
-FACEBOOK_API_SECRET = '5abc9cff98dfa03988de3f8184633d5d'
 
-VK_APP_ID = '2698966'
-VK_API_SECRET = 'eqWEasdRUCC13JS4dwssF'
-
-GOOGLE_OAUTH2_CLIENT_ID = '595206015716-ru34i9k0pln466qvtv090npd23hs8fea.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'CDkhHRzANJB01oq5tr-SSJob'
-
-TWITTER_CONSUMER_KEY = 'Pouj0yp5f7Iop9VjJ77KDw'
-TWITTER_CONSUMER_SECRET = 'RGKMQLLT72EyPY62Za1sQxCvZ0IC6eRtZbN0pQcxU'
-
-GITHUB_APP_ID = '9de78850b36bfae5ec9b'
-GITHUB_API_SECRET = '2ed03013e6fdbe96fda4e99373f40853f0f38089'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
