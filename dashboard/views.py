@@ -117,6 +117,8 @@ def upload_image(request):
         thumb = Image.open(image.file.name)
         thumb = ImageOps.fit(thumb, (305, 305), Image.ANTIALIAS, centering=(0.5, 0))
         output = StringIO.StringIO()
+        if thumb.mode != "RGB":
+            thumb = thumb.convert('RGB')
         thumb.save(output, 'JPEG', quality=75)
         content = output.getvalue()
 
